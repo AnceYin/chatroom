@@ -15,8 +15,9 @@
 
 |技术|说明|版本|备注|
 |--|--|--|--|
-|C++ socket API|通信|||
+|boost.asio|通信|||
 |epoll/select|IO多路复用|||
+|MySQL C API|操作数据库|||
 
 ### 前端技术
 
@@ -31,13 +32,20 @@
 |工具|说明|版本|备注|
 |--|--|--|--|
 |VS 2022|开发IDE||https://visualstudio.microsoft.com/|
+|Navicat|数据库连接工具||http://www.formysql.com/xiazai.html|
 
 ### 开发环境
 
 |工具|版本|备注|
 |--|--|--|
-|Linux||操作系统|
+|Linux||服务器运行环境|
+|Windows||客户端运行环境|
 |MySQL||https://www.mysql.com/cn/|
 
 ### 安装教程
+
+暂无
+
+## 开发进度
+
 暂无
