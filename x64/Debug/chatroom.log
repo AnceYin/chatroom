@@ -1,0 +1,26 @@
+﻿  uic add.ui
+  uic chatroom.ui
+  uic creat_group.ui
+  uic login.ui
+  uic new_contacts.ui
+  uic Profile.ui
+  uic Register.ui
+  rcc chatroom.qrc
+  moc chatroom.h
+  moc login.h
+  moc Register.h
+   RCC: Warning: No resources in 'C:\Users\ASUS\source\C++椤圭洰\chatroom\chatroom.qrc'.
+  moc Profile.h
+  moc add.h
+  moc new_contacts.h
+  moc creat_group.h
+  add.cpp
+  creat_group.cpp
+  new_contacts.cpp
+  Profile.cpp
+  Register.cpp
+  chatroom.cpp
+  login.cpp
+  main.cpp
+C:\Users\ASUS\source\C++项目\chatroom\chatroom.cpp(17,16): error C2084: 函数“void chatroom::SerachPushButtonClicked(void)”已有主体
+C:\Users\ASUS\source\C++项目\chatroom\chatroom.cpp(12,16): message : 参见“SerachPushButtonClicked”的前一个定义
