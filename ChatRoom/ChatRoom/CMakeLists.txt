@@ -3,7 +3,7 @@
 #
 
 # 将源代码添加到此项目的可执行文件。
-add_executable (ChatRoom "main.cpp"  "net.cpp")
+add_executable (ChatRoom "main.cpp"  "net.cpp" "serialize/DataStream.h" "serialize/Serializable.h" "serialize/DataStream.cpp"  "Service/MessageHandler.h" "Service/asfd.h" "Service/MessageHandler.cpp" "DAO/LogInDao.h" "clientData.h")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET ChatRoom PROPERTY CXX_STANDARD 20)

@@ -13,7 +13,7 @@
 #include <algorithm>
 using namespace std;
 
-#include <serialize/Serializable.h>
+#include "Serializable.h"
 
 namespace yazi {
 namespace serialize {

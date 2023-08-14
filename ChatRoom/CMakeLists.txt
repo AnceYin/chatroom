@@ -5,6 +5,7 @@ cmake_minimum_required (VERSION 3.8)
 
 include_directories("./config")
 include_directories("./DAO")
+include_directories("./serialize")
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)

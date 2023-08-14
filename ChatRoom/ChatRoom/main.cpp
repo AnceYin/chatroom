@@ -11,10 +11,16 @@
 
 #include "config/server_config.h"
 
+#include "serialize/DataStream.h"
+#include "serialize/Serializable.h"
+
+#include "Service/MessageHandler.h"
+
+using namespace yazi::serialize;
 
 struct Client {
 	int sockfd;
-	std::string name;//名字
+	int userid;//用户编号
 };
 
 int main(){
@@ -100,7 +106,7 @@ int main(){
 				// 保存客户信息
 				Client client;
 				client.sockfd = client_sockfd;
-				client.name = "";
+				client.userid = 114514;
 
 				clients[client_sockfd] = client;
 			} 
@@ -121,15 +127,32 @@ int main(){
 				else {
 					// 收到客户端消息
 					std::string msg(buffer, n);
-
 					// 判断消息类型
-					std::cout << msg;
-					// 选择处理函数
-					for (auto& c : clients) {
-						write(c.first, msg.c_str(), msg.size());
-					}
-					// 根据结果返回处理函数
 
+					DataStream ds(msg);
+
+					int msgType, msgSize;
+					ds >> msgType >> msgSize;
+
+					// 选择处理函数
+					MessageHandlerIndustry msgHandIn(msgType, msgSize, ds);
+
+					MessageHandler* handler = msgHandIn.CreateHandleMessage();
+					DataStream back_ds = handler->HandleMessage(msgSize, ds);
+					vector<int> sendList = handler->MessageSentList(msgSize, ds);
+					
+					for (auto& c : clients) {
+						write(c.first, ds.data(), ds.size());
+					}
+					// 根据返回发送名单发送报文
+					for (auto& c : sendList) {
+						for (auto& client : clients) {
+							if (client.second.userid == c) {
+								write(client.first, back_ds.data(), back_ds.size());
+							}
+						}
+					}
+					delete handler;
 				}
 			}
 		}
