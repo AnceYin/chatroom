@@ -12,9 +12,9 @@ public:
 	~Login();
 
 private slots:
-	void LoginPushButtonClicked();//µã»÷µÇÂ¼°´Å¥²éÑ¯Êı¾İ¿â±È½ÏÓÃ»§ÃûºÍÃÜÂëÊÇ·ñÕıÈ·
-	void SignUpClicked();//µã»÷Sign upµ÷ÓÃµÄ²Ûº¯Êı
-	void ForgetPasswordClicked();//µã»÷Forget passwordµ÷ÓÃµÄ²Ûº¯Êı
+	void LoginPushButtonClicked();// ç‚¹å‡»ç™»å½•æŒ‰é’®æŸ¥è¯¢æ•°æ®åº“æ¯”è¾ƒç”¨æˆ·åå’Œå¯†ç æ˜¯å¦æ­£ç¡®
+	void SignUpClicked();// ç‚¹å‡»Sign upè°ƒç”¨çš„æ§½å‡½æ•°
+	void ForgetPasswordClicked();// ç‚¹å‡»Forget passwordè°ƒç”¨çš„æ§½å‡½æ•°
 
 private:
 	Ui::LoginClass ui;

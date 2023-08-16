@@ -14,10 +14,6 @@ void ChatRoom::SerachPushButtonClicked()
 
 }
 
-void ChatRoom::SerachPushButtonClicked()
-{
-
-}
 
 void ChatRoom::LogOutPushButtonClicked()
 {

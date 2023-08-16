@@ -10,14 +10,14 @@ class NewContacts : public QMainWindow
 public:
 	NewContacts(QWidget *parent = nullptr);
 	~NewContacts();
-	void ShowMessage();//²éÑ¯Êý¾Ý¿â»ñÈ¡ÏûÏ¢(Ë½ÁÄÐÅÏ¢ºÍÈºÁÄÐÅÏ¢)²¢ÏÔÊ¾ÏûÏ¢
-	void ShowNewContacts();//½ÓÊÜ·þÎñÆ÷·¢À´µÄºÃÓÑÉêÇë²¢ÏÔÊ¾
+	void ShowMessage();//ï¿½ï¿½Ñ¯ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½È¡ï¿½ï¿½Ï¢(Ë½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Èºï¿½ï¿½ï¿½ï¿½Ï¢)ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ï¢
+	void ShowNewContacts();//ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë²¢ï¿½ï¿½Ê¾
 
 private slots:
-	void ReturnPushButtonClicked();//·µ»ØÉÏ¼¶Ò³Ãæ
-	void AcceptPushButtonClicked();//µã»÷Accept°´Å¥Ö´ÐÐµÄ²Ù×÷
-	void RefusePushButtonClicked();//µã»÷Accept°´Å¥Ö´ÐÐµÄ²Ù×÷
-	void MessageClicked();//µã»÷ÏûÏ¢ÏÔÊ¾ÁÄÌì¼ÇÂ¼
+	void ReturnPushButtonClicked();//ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½Ò³ï¿½ï¿½
+	void AcceptPushButtonClicked();//ï¿½ï¿½ï¿½Acceptï¿½ï¿½Å¥Ö´ï¿½ÐµÄ²ï¿½ï¿½ï¿½
+	void RefusePushButtonClicked();//ï¿½ï¿½ï¿½Acceptï¿½ï¿½Å¥Ö´ï¿½ÐµÄ²ï¿½ï¿½ï¿½
+	void MessageClicked();//ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Â¼
 
 private:
 	Ui::NewContactsClass ui;

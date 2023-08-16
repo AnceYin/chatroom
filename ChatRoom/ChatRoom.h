@@ -10,14 +10,14 @@ class ChatRoom : public QMainWindow
 public:
     ChatRoom(QWidget *parent = nullptr);
     ~ChatRoom();
-    void ShowMessage();//显示消息
+    void ShowMessage();//锟斤拷示锟斤拷息
 
 private slots:
-    void SerachPushButtonClicked();//点击serach按钮执行查找消息的操作
-    void LogOutPushButtonClicked();//点击Log out登出
-    void SendPushButtonClicked();//点击Send发送消息
-    void AddPushButtonClicked();//点击add跳转到add页面
-    void MessageClicked();//点击消息显示聊天记录
+    void SerachPushButtonClicked();//锟斤拷锟絪erach锟斤拷钮执锟叫诧拷锟斤拷锟斤拷息锟侥诧拷锟斤拷
+    void LogOutPushButtonClicked();//锟斤拷锟絃og out锟角筹拷
+    void SendPushButtonClicked();//锟斤拷锟絊end锟斤拷锟斤拷锟斤拷息
+    void AddPushButtonClicked();//锟斤拷锟絘dd锟斤拷转锟斤拷add页锟斤拷
+    void MessageClicked();//锟斤拷锟斤拷锟较拷锟绞撅拷锟斤拷锟斤拷录
 
 private:
     Ui::ChatRoomClass ui;
