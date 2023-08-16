@@ -1,5 +1,0 @@
-C:/Users/VIP/source/repos/ChatRoom/out/build/x64-debug/CMakeFiles/edit_cache.dir
-C:/Users/VIP/source/repos/ChatRoom/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/VIP/source/repos/ChatRoom/out/build/x64-debug/ChatRoom/CMakeFiles/ChatRoom.dir
-C:/Users/VIP/source/repos/ChatRoom/out/build/x64-debug/ChatRoom/CMakeFiles/edit_cache.dir
-C:/Users/VIP/source/repos/ChatRoom/out/build/x64-debug/ChatRoom/CMakeFiles/rebuild_cache.dir
