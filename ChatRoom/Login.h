@@ -2,20 +2,29 @@
 
 #include <QMainWindow>
 #include "ui_Login.h"
+#include "TcpConnection.h"
+#include "serialize/DataStream.h"
+#include "serialize/Serializable.h"
+#include <iostream>
+
+using namespace yazi::serialize;
 
 class Login : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	Login(QWidget *parent = nullptr);
+	Login(QWidget* parent = nullptr);
 	~Login();
 
 private slots:
-	void LoginPushButtonClicked();//µã»÷µÇÂ¼°´Å¥²éÑ¯Êı¾İ¿â±È½ÏÓÃ»§ÃûºÍÃÜÂëÊÇ·ñÕıÈ·
-	void SignUpClicked();//µã»÷Sign upµ÷ÓÃµÄ²Ûº¯Êı
-	void ForgetPasswordClicked();//µã»÷Forget passwordµ÷ÓÃµÄ²Ûº¯Êı
+	void LoginPushButtonClicked();//ç‚¹å‡»ç™»å½•æŒ‰é’®æŸ¥è¯¢æ•°æ®åº“æ¯”è¾ƒç”¨æˆ·åå’Œå¯†ç æ˜¯å¦æ­£ç¡®
+	void SignUpClicked();//ç‚¹å‡»Sign upè°ƒç”¨çš„æ§½å‡½æ•°
+	void ForgetPasswordClicked();//ç‚¹å‡»Forget passwordè°ƒç”¨çš„æ§½å‡½æ•°
+	void onDataReceived(const QByteArray& data);
+
 
 private:
 	Ui::LoginClass ui;
+	TcpSingleton* m_tcpConn;
 };

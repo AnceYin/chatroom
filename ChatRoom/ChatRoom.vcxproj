@@ -83,9 +83,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="net.cpp" />
     <ClCompile Include="NewContacts.cpp" />
     <ClCompile Include="Profile.cpp" />
     <ClCompile Include="Register.cpp" />
+    <ClCompile Include="serialize\DataStream.cpp" />
+    <ClCompile Include="TcpConnection.cpp" />
     <QtRcc Include="ChatRoom.qrc" />
     <QtUic Include="Add.ui" />
     <QtUic Include="ChatRoom.ui" />
@@ -118,6 +121,11 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Register.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="serialize\DataStream.h" />
+    <ClInclude Include="serialize\Serializable.h" />
+    <QtMoc Include="TcpConnection.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -12,11 +12,11 @@ public:
 	~Add();
 
 private slots:
-	void ReturnPushButtonClicked();//·µ»ØÉÏ¼¶Ä¿Â¼
-	void NewContactPushButtonClicked();//µã»÷New ContactÌí¼ÓºÃÓÑ
-	void CreatAGroupPushButtonClicked();//µã»÷Creat a groupÌø×ªµ½Creating a groupÒ³Ãæ
-	void SerachPushButtonClicked();//µã»÷serach²éÕÒÓÃ»§»òÈºÁÄ
-	void JoinAGroupPushButtonClicked();//µã»÷Join a group»ñÈ¡ËÑË÷¿òÀïµÄÈººÅ²¢¼ÓÈëÈºÁÄ
+	void ReturnPushButtonClicked();//è¿”å›ä¸Šçº§ç›®å½•
+	void NewContactPushButtonClicked();//ç‚¹å‡»New Contactæ·»åŠ å¥½å‹
+	void CreatAGroupPushButtonClicked();//ç‚¹å‡»Creat a groupè·³è½¬åˆ°Creating a groupé¡µé¢
+	void SerachPushButtonClicked();//ç‚¹å‡»serachæŸ¥æ‰¾ç”¨æˆ·æˆ–ç¾¤èŠ
+	void JoinAGroupPushButtonClicked();//ç‚¹å‡»Join a groupè·å–æœç´¢æ¡†é‡Œçš„ç¾¤å·å¹¶åŠ å…¥ç¾¤èŠ
 
 private:
 	Ui::AddClass ui;
