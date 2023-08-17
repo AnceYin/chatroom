@@ -2,6 +2,7 @@
     - user_id（用户ID，主键，数据库自动生成）
     - username（用户名）
     - password（密码）
+    - status (用户状态 在线/不在线)
 2. Friend表：
     - friend_id（好友关系ID，主键，数据库自动生成）
     - user_id（用户ID，外键，关联User表的user_id字段）
