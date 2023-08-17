@@ -1,2 +1,4 @@
-﻿C:\Users\Ance\AppData\Local\QtMsBuild\qt_vars.targets(68,5): error : There's no Qt version assigned to project ChatRoom.vcxproj for configuration Debug/x64.
-C:\Users\Ance\AppData\Local\QtMsBuild\qt_vars.targets(68,5): error : Please set a Qt installation in 'Project|Properties|Configuration Properties|Qt Project Settings|Qt Installation'.
+﻿  ChatRoom.cpp
+  main.cpp
+  moc_ChatRoom.cpp
+  ChatRoom.vcxproj -> C:\Users\ASUS\Desktop\前端开发\ChatRoom\x64\Debug\ChatRoom.exe

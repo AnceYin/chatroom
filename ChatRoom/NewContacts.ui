@@ -1,22 +1,72 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>NewContactsClass</class>
- <widget class="QMainWindow" name="NewContactsClass" >
-  <property name="objectName" >
-   <string notr="true">NewContactsClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QMainWindow" name="NewContactsClass">
+  <property name="geometry">
    <rect>
-	<x>0</x>
-	<y>0</y>
-	<width>600</width>
-	<height>400</height>
+    <x>0</x>
+    <y>0</y>
+    <width>750</width>
+    <height>460</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="minimumSize">
+   <size>
+    <width>750</width>
+    <height>460</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>750</width>
+    <height>460</height>
+   </size>
+  </property>
+  <property name="windowTitle">
    <string>NewContacts</string>
-  </property>  <widget class="QMenuBar" name="menuBar" />  <widget class="QToolBar" name="mainToolBar" />  <widget class="QWidget" name="centralWidget" />  <widget class="QStatusBar" name="statusBar" />
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QPushButton" name="Return">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>70</width>
+      <height>40</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    text-align: left;
+}
+
+QPushButton::icon {
+    margin-left: 0px;  // 将图标的左边距设为0
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>../../图片/返回双箭头.png</normaloff>../../图片/返回双箭头.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>50</width>
+      <height>50</height>
+     </size>
+    </property>
+   </widget>
+  </widget>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
  <connections/>
-</UI>
+</ui>
