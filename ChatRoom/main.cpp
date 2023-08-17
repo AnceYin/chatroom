@@ -1,4 +1,5 @@
 #include "ChatRoom.h"
+#include "CreatGroup.h"
 #include <QtWidgets/QApplication>
 #include <QApplication>
 #include <QLabel>
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     ChatRoom w;
-    w.show();
+    CreatGroup c;
+    c.show();
+    //w.show();
     return a.exec();
 }
