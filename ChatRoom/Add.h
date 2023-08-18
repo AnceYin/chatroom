@@ -12,7 +12,7 @@ public:
 	~Add();
 
 private slots:
-	void CreatPushButtonClicked();//»ñÈ¡ÈºÁÄÍ·ÏñºÍÃû³Æ
+	void CreatPushButtonClicked();//ï¿½ï¿½È¡Èºï¿½ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 private:
 	Ui::AddClass ui;
