@@ -11,11 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
@@ -38,6 +40,11 @@ public:
     QLabel *label;
     QSpacerItem *verticalSpacer_2;
     QLineEdit *lineEdit;
+    QSpacerItem *verticalSpacer_4;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *pushButton;
+    QSpacerItem *horizontalSpacer_2;
     QSpacerItem *verticalSpacer_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
@@ -50,7 +57,7 @@ public:
         CreatGroupClass->setEnabled(true);
         CreatGroupClass->resize(750, 460);
         CreatGroupClass->setMinimumSize(QSize(750, 460));
-        CreatGroupClass->setMaximumSize(QSize(750, 460));
+        CreatGroupClass->setMaximumSize(QSize(1000, 460));
         centralWidget = new QWidget(CreatGroupClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         widget_3 = new QWidget(centralWidget);
@@ -92,7 +99,7 @@ public:
 
         widget_2 = new QWidget(widget_3);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        widget_2->setGeometry(QRect(200, 0, 531, 441));
+        widget_2->setGeometry(QRect(200, 0, 531, 459));
         verticalLayout_2 = new QVBoxLayout(widget_2);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -116,7 +123,7 @@ public:
 
         verticalLayout_2->addWidget(label);
 
-        verticalSpacer_2 = new QSpacerItem(20, 104, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        verticalSpacer_2 = new QSpacerItem(20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
         verticalLayout_2->addItem(verticalSpacer_2);
 
@@ -129,6 +136,38 @@ public:
         lineEdit->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(lineEdit);
+
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer_4);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
+        pushButton = new QPushButton(widget_2);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setMinimumSize(QSize(250, 0));
+        pushButton->setMaximumSize(QSize(16777215, 16777215));
+        QFont font3;
+        font3.setPointSize(14);
+        font3.setBold(true);
+        font3.setItalic(true);
+        font3.setWeight(75);
+        pushButton->setFont(font3);
+        pushButton->setStyleSheet(QString::fromUtf8("background:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:1 rgba(255, 255, 255, 255))"));
+
+        horizontalLayout->addWidget(pushButton);
+
+        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer_2);
+
+
+        verticalLayout_2->addLayout(horizontalLayout);
 
         verticalSpacer_3 = new QSpacerItem(20, 105, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
@@ -169,6 +208,7 @@ public:
 
         label->setText(QCoreApplication::translate("CreatGroupClass", "New Contact", nullptr));
         lineEdit->setText(QString());
+        pushButton->setText(QCoreApplication::translate("CreatGroupClass", "Search\357\274\201", nullptr));
     } // retranslateUi
 
 };

@@ -1,17 +1,4 @@
-﻿  Add.cpp
-  ChatRoom.cpp
-  CreatGroup.cpp
-  Login.cpp
-  NewContacts.cpp
-  Profile.cpp
-  Register.cpp
+﻿  CreatGroup.cpp
   main.cpp
-  moc_Add.cpp
-  moc_ChatRoom.cpp
   moc_CreatGroup.cpp
-  moc_Login.cpp
-  moc_NewContacts.cpp
-  moc_Profile.cpp
-  moc_Register.cpp
-  qrc_ChatRoom.cpp
   ChatRoom.vcxproj -> D:\XiaoDouwa\c++\chatroom\ChatRoom\Debug\ChatRoom.exe

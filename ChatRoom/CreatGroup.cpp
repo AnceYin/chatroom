@@ -1,4 +1,5 @@
 #include "CreatGroup.h"
+#include "Add.h"
 
 CreatGroup::CreatGroup(QWidget *parent)
 	: QMainWindow(parent)
@@ -31,7 +32,8 @@ void CreatGroup::onItemClicked(QListWidgetItem* item)
 	}
 	else
 	{
-
+		Add *a = new Add;
+		a->show();
 	}
 	
 }

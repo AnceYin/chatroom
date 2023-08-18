@@ -148,6 +148,7 @@
     <ClCompile Include="Profile.cpp" />
     <ClCompile Include="Register.cpp" />
     <QtRcc Include="ChatRoom.qrc" />
+    <QtRcc Include="Resource.qrc" />
     <QtUic Include="Add.ui" />
     <QtUic Include="ChatRoom.ui" />
     <QtMoc Include="ChatRoom.h" />
