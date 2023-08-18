@@ -1,4 +1,4 @@
--- 用户ID规定5位数初始ID为10000，群聊ID规定8位数初始ID为10000000
+-- 用户ID规定5位数初始ID为10001，群聊ID规定8位数初始ID为10000001
 
 -- 创建Users表
 CREATE TABLE Users (
@@ -10,7 +10,7 @@ CREATE TABLE Users (
   UNIQUE KEY unique_username (username)
 );
 
-ALTER TABLE Users AUTO_INCREMENT = 10000;
+ALTER TABLE Users AUTO_INCREMENT = 10001;
 
 -- 创建Teams表
 CREATE TABLE Teams (
@@ -20,7 +20,7 @@ CREATE TABLE Teams (
   FOREIGN KEY (creator_id) REFERENCES Users(user_id)
 );
 
-ALTER TABLE Teams AUTO_INCREMENT = 10000000;
+ALTER TABLE Teams AUTO_INCREMENT = 10000001;
 
 -- 创建TeamMember表
 CREATE TABLE TeamMember (
