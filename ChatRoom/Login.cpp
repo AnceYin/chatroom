@@ -31,7 +31,7 @@ Login::Login(QWidget* parent)
 }
 
 Login::~Login()
-{}
+{} 
 
 void Login::LoginPushButtonClicked()
 {
