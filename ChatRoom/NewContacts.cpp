@@ -4,6 +4,7 @@ NewContacts::NewContacts(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
+
 }
 
 NewContacts::~NewContacts()

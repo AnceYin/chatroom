@@ -12,8 +12,7 @@ public:
 	~CreatGroup();
 
 private slots:
-	void ReturnPushButtonClicked();//返回上级页面
-	void CreatPushButtonClicked();//获取群聊头像和名称
+	void onItemClicked(QListWidgetItem* item);//点击各行发生的事件
 
 private:
 	Ui::CreatGroupClass ui;
