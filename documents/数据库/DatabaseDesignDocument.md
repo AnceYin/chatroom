@@ -3,8 +3,6 @@ v1.0.0
     - user_id（用户ID，主键，数据库自动生成）
     - username（用户名）
     - password（密码）
-    - ip（用户登录设备ip）// 可以为空
-    - port（用户登录设备端口）// 可以为空
 2. Teams表： //团队表
     - team_id（群组ID，主键，数据库自动生成）
     - team_name（群组名）
@@ -21,8 +19,6 @@ v1.0.1
     - username（用户名）
     - password（密码）
     - state (登录状态)
-    - ip（用户登录设备ip）// 可以为空
-    - port（用户登录设备端口）// 可以为空
 4. Message表：//消息表，每条消息都存在数据库
     - message_id（消息ID，主键，数据库自动生成）
     - team_id（群组ID，外键，关联Teams表的team_id字段）

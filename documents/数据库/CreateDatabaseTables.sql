@@ -5,8 +5,6 @@ CREATE TABLE Users (
   user_id INT(5) AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
   password VARCHAR(50) NOT NULL,
-  ip VARCHAR(50),
-  port INT,
   UNIQUE KEY unique_username (username)
 );
 

@@ -1,8 +1,8 @@
 -- 插入Users表的假数据
-INSERT INTO Users (username, password, ip, port) VALUES
-('user1', 'password1', '192.168.0.1', 8080),
-('user2', 'password2', '192.168.0.2', 8080),
-('user3', 'password3', NULL, NULL);
+INSERT INTO Users (username, password) VALUES
+('user1', 'password1'),
+('user2', 'password2'),
+('user3', 'password3');
 
 -- 插入Teams表的假数据
 INSERT INTO Teams (team_name, creator_id) VALUES
