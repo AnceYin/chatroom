@@ -1,156 +1,316 @@
-#include "../config/mysql_config.h"
+#include "mysql_config.h"
 #include <mysql_driver.h>
 #include <mysql_connection.h>
-
+#include <cppconn/prepared_statement.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
 #include <iostream>
 #include <string>
-
 using namespace std;
-
-// 用户信息
-struct User {
-	int user_id;
-	string username;
-	string password;
-	string status;
-};
+using namespace sql;
 
 // 用户登录函数
-bool userLogin(string username, string password) {
-	sql::mysql::MySQL_Driver* driver;
-	sql::Connection* con;
+bool userLogin(int user_id, string password, string ip, int port) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
 
-	// 创建MySQL连接
-	driver = sql::mysql::get_mysql_driver_instance();
-	con = driver->connect(HOST, USERNAME, PASSWORD);
+        // 执行登录查询
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("SELECT * FROM Users WHERE user_id = ? AND password = ?");
+        pstmt->setInt(1, user_id);
+        pstmt->setString(2, password);
+        ResultSet* res = pstmt->executeQuery();
+        bool success = res->next();
 
-	// 选择数据库
-	con->setSchema(DATABASE);
+        if (success) {
+            // 更新ip和port字段
+            pstmt = con->prepareStatement("UPDATE Users SET ip = ?, port = ? WHERE user_id = ?");
+            pstmt->setString(1, ip);
+            pstmt->setInt(2, port);
+            pstmt->setInt(3, user_id);
+            pstmt->execute();
+        }
 
-	// 执行登录查询
-	sql::Statement* stmt;
-	sql::ResultSet* res;
-
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT * FROM Users WHERE username = '" + username + "' AND password = '" + password + "'");
-
-	// 检查查询结果
-	bool success = res->next();
-
-	// 释放资源
-	delete res;
-	delete stmt;
-	delete con;
-	return success;
+        delete res;
+        delete pstmt;
+        delete con;
+        return success;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return false;
+    }
 }
 
 // 用户注册函数
-bool userRegister(string username, string password) {
-	sql::mysql::MySQL_Driver* driver;
-	sql::Connection* con;
+int userRegister(string username, string password) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
 
-	// 创建MySQL连接
-	driver = sql::mysql::get_mysql_driver_instance();
-	con = driver->connect(HOST, USERNAME, PASSWORD);
+        // 执行注册查询
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)", );
+        pstmt->setString(1, username);
+        pstmt->setString(2, password);
+        pstmt->execute();
 
-	// 选择数据库
-	con->setSchema(DATABASE);
+        // 获取生成的user_id
+        Statement* stmt = con->createStatement();
+        ResultSet* res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+        res->next();
+        int user_id = res->getInt(1);
 
-	// 执行注册查询
-	sql::PreparedStatement* pstmt;
-	pstmt = con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)");
-	pstmt->setString(1, username);
-	pstmt->setString(2, password);
-	pstmt->execute();
-
-	// 释放资源
-	delete pstmt;
-	delete con;
-	return true;
+        delete res;
+        delete stmt;
+        delete pstmt;
+        delete con;
+        return user_id;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return -1;
+    }
 }
 
 // 更改用户名函数
-bool changeUsername(int user_id, string old_password, string new_username) {
-	sql::mysql::MySQL_Driver* driver;
-	sql::Connection* con;
+void changeUsername(int user_id, string new_username) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
 
-	// 创建MySQL连接
-	driver = sql::mysql::get_mysql_driver_instance();
-	con = driver->connect(HOST, USERNAME, PASSWORD);
+        // 执行更改用户名操作
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("UPDATE Users SET username = ? WHERE user_id = ?");
+        pstmt->setString(1, new_username);
+        pstmt->setInt(2, user_id);
+        pstmt->execute();
 
-	// 选择数据库
-	con->setSchema(DATABASE);
-
-	// 执行查询以验证密码
-	sql::Statement* stmt;
-	sql::ResultSet* res;
-
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT * FROM Users WHERE user_id = " + to_string(user_id) + " AND password = '" + old_password + "'");
-
-	// 如果密码验证通过，则执行更改用户名操作
-	if (res->next()) {
-		sql::PreparedStatement* pstmt;
-		pstmt = con->prepareStatement("UPDATE Users SET username = ? WHERE user_id = ?");
-		pstmt->setString(1, new_username);
-		pstmt->setInt(2, user_id);
-		pstmt->execute();
-
-		// 释放资源
-		delete pstmt;
-		delete res;
-		delete stmt;
-		delete con;
-		return true;
-	}
-	else {
-		// 释放资源
-		delete res;
-		delete stmt;
-		delete con;
-		return false;
-	}
+        delete pstmt;
+        delete con;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
 }
 
 // 更改密码函数
-bool changePassword(int user_id, string old_password, string new_password) {
-	sql::mysql::MySQL_Driver* driver;
-	sql::Connection* con;
+bool changePassword(int user_id, string password, string new_password) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
 
-	// 创建MySQL连接
-	driver = sql::mysql::get_mysql_driver_instance();
-	con = driver->connect(HOST, USERNAME, PASSWORD);
+        // 验证密码
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("SELECT * FROM Users WHERE user_id = ? AND password = ?");
+        pstmt->setInt(1, user_id);
+        pstmt->setString(2, password);
+        ResultSet* res = pstmt->executeQuery();
+        bool success = res->next();
 
-	// 选择数据库
-	con->setSchema(DATABASE);
+        if (success) {
+            // 更新密码
+            pstmt = con->prepareStatement("UPDATE Users SET password = ? WHERE user_id = ?");
+            pstmt->setString(1, new_password);
+            pstmt->setInt(2, user_id);
+            pstmt->execute();
+        }
 
-	// 执行查询以验证密码
-	sql::Statement* stmt;
-	sql::ResultSet* res;
+        delete res;
+        delete pstmt;
+        delete con;
+        return success;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return false;
+    }
+}
 
-	stmt = con->createStatement();
-	res = stmt->executeQuery("SELECT * FROM Users WHERE user_id = " + to_string(user_id) + " AND password = '" + old_password + "'");
+// 创建群聊函数
+int createTeam(int user_id, string team_name) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
 
-	// 如果密码验证通过，则执行更改密码操作
-	if (res->next()) {
-		sql::PreparedStatement* pstmt;
-		pstmt = con->prepareStatement("UPDATE Users SET password = ? WHERE user_id = ?");
-		pstmt->setString(1, new_password);
-		pstmt->setInt(2, user_id);
-		pstmt->execute();
+        // 创建群聊
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("INSERT INTO Teams (team_name, creator_id) VALUES (?, ?)");
+        pstmt->setString(1, team_name);
+        pstmt->setInt(2, user_id);
+        pstmt->execute();
 
-		// 释放资源
-		delete pstmt;
-		delete res;
-		delete stmt;
-		delete con;
-		return true;
-	}
-	else {
-		// 释放资源
-		delete res;
-		delete stmt;
-		delete con;
-		return false;
-	}
+        // 获取生成的team_id
+        Statement* stmt = con->createStatement();
+        ResultSet* res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
+        res->next();
+        int team_id = res->getInt(1);
+        // 将创建者加入TeamMember表
+        pstmt = con->prepareStatement("INSERT INTO TeamMember (group_id, member_id) VALUES (?, ?)");
+        pstmt->setInt(1, team_id);
+        pstmt->setInt(2, user_id);
+        pstmt->execute();
+
+        delete res;
+        delete stmt;
+        delete pstmt;
+        delete con;
+        return team_id;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return -1;
+    }
+}
+
+// 加入群聊函数
+void joinTeam(int user_id, int team_id) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
+
+        // 加入群聊
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("INSERT INTO TeamMember (group_id, member_id) VALUES (?, ?)");
+        pstmt->setInt(1, team_id);
+        pstmt->setInt(2, user_id);
+        pstmt->execute();
+
+        delete pstmt;
+        delete con;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+    }
+}
+
+// 发送信息函数
+bool sendMessage(int user_id, int team_id, string message) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
+
+        // 查询群聊中其他用户的id
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("SELECT member_id FROM TeamMember WHERE group_id = ? AND member_id != ?");
+        pstmt->setInt(1, team_id);
+        pstmt->setInt(2, user_id);
+        ResultSet* res = pstmt->executeQuery();
+
+        // 发送消息给其他用户
+        while (res->next()) {
+            int member_id = res->getInt("member_id");
+            // 通过Users表的ip和port字段发送消息给其他用户
+            // ...
+
+            // 聊天记录暂不存储数据库
+        }
+
+        delete res;
+        delete pstmt;
+        delete con;
+        return true;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return false;
+    }
+}
+
+// 更改群名函数
+bool changeTeamName(int user_id, int team_id, string new_team_name) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
+
+        // 根据team_id判断是否为user_id
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
+        pstmt->setInt(1, team_id);
+        pstmt->setInt(2, user_id);
+        ResultSet* res = pstmt->executeQuery();
+        bool success = res->next();
+
+        if (success) {
+            // 更改群名
+            pstmt = con->prepareStatement("UPDATE Teams SET team_name = ? WHERE team_id = ?");
+            pstmt->setString(1, new_team_name);
+            pstmt->setInt(2, team_id);
+            pstmt->execute();
+        }
+
+        delete res;
+        delete pstmt;
+        delete con;
+        return success;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return false;
+    }
+}
+
+// 删除群聊函数
+bool deleteTeam(int user_id, int team_id) {
+    try {
+        mysql::mysql_driver* driver;
+        Connection* con;
+        driver = mysql::get_mysql_driver_instance();
+        con = driver->connect(HOST, USERNAME, PASSWORD);
+        con->setSchema(DATABASE);
+
+        // 根据team_id判断是否为user_id
+        PreparedStatement* pstmt;
+        pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
+        pstmt->setInt(1, team_id);
+        pstmt->setInt(2, user_id);
+        ResultSet* res = pstmt->executeQuery();
+        bool success = res->next();
+
+        if (success) {
+            // 清理TeamMember表中相关内容
+            pstmt = con->prepareStatement("DELETE FROM TeamMember WHERE group_id = ?");
+            pstmt->setInt(1, team_id);
+            pstmt->execute();
+
+            // 清理Teams表中相关内容
+            pstmt = con->prepareStatement("DELETE FROM Teams WHERE team_id = ?");
+            pstmt->setInt(1, team_id);
+            pstmt->execute();
+        }
+
+        delete res;
+        delete pstmt;
+        delete con;
+        return success;
+    }
+    catch (SQLException& e) {
+        cout << "SQL Exception: " << e.what() << endl;
+        return false;
+    }
 }
