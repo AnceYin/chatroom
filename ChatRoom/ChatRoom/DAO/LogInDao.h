@@ -5,12 +5,13 @@
 #include <cppconn/statement.h>
 #include <cppconn/resultset.h>
 #include <iostream>
+#include <vector>
 #include <string>
 using namespace std;
 using namespace sql;
 
 // 用户登录函数
-bool userLogin(int user_id, string password, string ip, int port) {
+bool userLogin(int user_id, string password) {
     try {
         mysql::mysql_driver* driver;
         Connection* con;
@@ -25,15 +26,6 @@ bool userLogin(int user_id, string password, string ip, int port) {
         pstmt->setString(2, password);
         ResultSet* res = pstmt->executeQuery();
         bool success = res->next();
-
-        if (success) {
-            // 更新ip和port字段
-            pstmt = con->prepareStatement("UPDATE Users SET ip = ?, port = ? WHERE user_id = ?");
-            pstmt->setString(1, ip);
-            pstmt->setInt(2, port);
-            pstmt->setInt(3, user_id);
-            pstmt->execute();
-        }
 
         delete res;
         delete pstmt;
@@ -203,8 +195,9 @@ void joinTeam(int user_id, int team_id) {
     }
 }
 
-// 发送信息函数
-bool sendMessage(int user_id, int team_id, string message) {
+// 获取要转发的ID列表
+vector<int> getForwardingIDs(int user_id, int team_id) {
+    vector<int> forwardingIDs;
     try {
         mysql::mysql_driver* driver;
         Connection* con;
@@ -219,25 +212,24 @@ bool sendMessage(int user_id, int team_id, string message) {
         pstmt->setInt(2, user_id);
         ResultSet* res = pstmt->executeQuery();
 
-        // 发送消息给其他用户
+        // 将要转发的ID添加到转发列表中
         while (res->next()) {
             int member_id = res->getInt("member_id");
-            // 通过Users表的ip和port字段发送消息给其他用户
-            // ...
-
-            // 聊天记录暂不存储数据库
+            forwardingIDs.push_back(member_id);
         }
 
         delete res;
         delete pstmt;
         delete con;
-        return true;
     }
     catch (SQLException& e) {
         cout << "SQL Exception: " << e.what() << endl;
-        return false;
     }
+
+    // 返回转发列表
+    return forwardingIDs;
 }
+
 
 // 更改群名函数
 bool changeTeamName(int user_id, int team_id, string new_team_name) {
