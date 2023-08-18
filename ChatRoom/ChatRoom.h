@@ -22,3 +22,4 @@ private slots:
 private:
     Ui::ChatRoomClass ui;
 };
+
