@@ -15,13 +15,17 @@
 #include "serialize/Serializable.h"
 
 #include "Service/MessageHandler.h"
+#include "Service/MessageHandlerCreate.h"
 
 using namespace yazi::serialize;
 
 struct Client {
 	int sockfd;
-	int userid;//用户编号
+	string username;//用户编号
 };
+
+// 保存所有客户端信息
+std::map<int, Client> clients;
 
 int main(){
 	// 创建监听Socket
@@ -66,8 +70,6 @@ int main(){
 	if (ret < 0) {
 		perror("epoll_ctl error");
 	}
-	// 保存所有客户端信息
-	std::map<int, Client> clients;
 
 	// 循环监听
 	while (1) {
@@ -106,7 +108,7 @@ int main(){
 				// 保存客户信息
 				Client client;
 				client.sockfd = client_sockfd;
-				client.userid = 114514;
+				client.username = "";
 
 				clients[client_sockfd] = client;
 			} 
@@ -121,34 +123,46 @@ int main(){
 					// 客户端此时断开连接
 					close(fd);
 					epoll_ctl(epld, EPOLL_CTL_DEL, fd, 0);
-
 					clients.erase(fd);
 				}
 				else {
 					// 收到客户端消息
 					std::string msg(buffer, n);
+
+					if (!strcmp(msg.c_str(), "gun"))
+					{
+						close(epld);
+						close(socketfd);
+					}
+
+					if (buffer[0] == 1) break;
+
+					for (auto& c : clients) {
+						write(c.first, buffer, n);
+					}
+
+					std::string msgType = msg.substr(0, 2);
+
+					std::string remaining = msg.substr(2);
+
+					int msgSize = 0;
 					// 判断消息类型
 
-					DataStream ds(msg);
-
-					int msgType, msgSize;
-					ds >> msgType >> msgSize;
-
 					// 选择处理函数
-					MessageHandlerIndustry msgHandIn(msgType, msgSize, ds);
+					MessageHandlerIndustry msgHandIn(msgType, msgSize, remaining);
+					MessageHandler* handler = msgHandIn.CreateMessageHandler();
+					std::string back_str = handler->HandleMessage(msgSize, remaining);
+					vector<string> sendList = handler->MessageSentList(msgSize, remaining);
 
-					MessageHandler* handler = msgHandIn.CreateHandleMessage();
-					DataStream back_ds = handler->HandleMessage(msgSize, ds);
-					vector<int> sendList = handler->MessageSentList(msgSize, ds);
-					
-					for (auto& c : clients) {
-						write(c.first, ds.data(), ds.size());
+					if (msgType == "01") {
+						clients[fd].username = sendList.front();
 					}
+					
 					// 根据返回发送名单发送报文
 					for (auto& c : sendList) {
 						for (auto& client : clients) {
-							if (client.second.userid == c) {
-								write(client.first, back_ds.data(), back_ds.size());
+							if (client.second.username == c) {
+								write(client.first, back_str.c_str(), back_str.size());
 							}
 						}
 					}
@@ -156,7 +170,6 @@ int main(){
 				}
 			}
 		}
-
 	}
 	// 关闭epoll实例
 	close(epld);
