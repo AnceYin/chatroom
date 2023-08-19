@@ -1,4 +1,3 @@
-#include "mysql_config.h"
 #include <mysql_driver.h>
 #include <mysql_connection.h>
 #include <cppconn/prepared_statement.h>
@@ -10,10 +9,11 @@
 using namespace std;
 using namespace sql;
 
+
 // 用户登录函数
 bool userLogin(int user_id, string password) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -41,7 +41,7 @@ bool userLogin(int user_id, string password) {
 // 用户注册函数
 int userRegister(string username, string password) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -49,7 +49,7 @@ int userRegister(string username, string password) {
 
         // 执行注册查询
         PreparedStatement* pstmt;
-        pstmt = con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)", );
+        pstmt = con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)");
         pstmt->setString(1, username);
         pstmt->setString(2, password);
         pstmt->execute();
@@ -75,7 +75,7 @@ int userRegister(string username, string password) {
 // 更改用户名函数
 void changeUsername(int user_id, string new_username) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -99,7 +99,7 @@ void changeUsername(int user_id, string new_username) {
 // 更改密码函数
 bool changePassword(int user_id, string password, string new_password) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -135,7 +135,7 @@ bool changePassword(int user_id, string password, string new_password) {
 // 创建群聊函数
 int createTeam(int user_id, string team_name) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -174,7 +174,7 @@ int createTeam(int user_id, string team_name) {
 // 加入群聊函数
 void joinTeam(int user_id, int team_id) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -199,7 +199,7 @@ void joinTeam(int user_id, int team_id) {
 vector<int> getForwardingIDs(int user_id, int team_id) {
     vector<int> forwardingIDs;
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -234,7 +234,7 @@ vector<int> getForwardingIDs(int user_id, int team_id) {
 // 更改群名函数
 bool changeTeamName(int user_id, int team_id, string new_team_name) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -270,7 +270,7 @@ bool changeTeamName(int user_id, int team_id, string new_team_name) {
 // 删除群聊函数
 bool deleteTeam(int user_id, int team_id) {
     try {
-        mysql::mysql_driver* driver;
+        mysql::MySQL_Driver* driver;
         Connection* con;
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
@@ -306,3 +306,77 @@ bool deleteTeam(int user_id, int team_id) {
         return false;
     }
 }
+
+/* ------------------------------- test -------------------------------
+void testLogin(){
+    bool b = userLogin(10001,"password1");
+    if(b){
+        cout<<"登录成功\n";
+    }else {
+        cout<<"登录失败\n";
+    }
+}
+
+void testRegister(){
+    string userName {"诺诺"};
+    string passWord {"nuo"};
+    int id = userRegister(userName, passWord);
+    cout<< userName + ", 欢迎您! 您的ID为" << id << "\n";
+}
+
+void testChangeUsername(){
+    changeUsername(10001,"诺诺");
+}
+
+void testChangePassword(){
+    bool b1 = changePassword(10001, "password1", "password");
+    bool b2 = changePassword(10001, "password1", "password");
+    for (auto &&x : {b1, b1}){
+        if(x){
+            cout<<"修改成功\n";
+        }else {
+            cout<<"修改失败\n";
+        }
+    }
+}
+
+void testCreateTeam(){
+    int i = createTeam(10001,"电池");
+    cout<< "创建成功! 群号为: "<< i << "\n";
+}
+
+void testJoinTeam(){
+    joinTeam(10001, 10000002);
+    cout << "请查看数据库, 判断是否添加成功\n";
+}
+
+void testGetForwardingIDs(){
+    vector<int> v = getForwardingIDs(10001,10000002);
+    for (auto &&x : v){
+        cout << x << "|";
+    }
+    cout << endl;
+}
+
+void testChangeTeamName(){
+    bool b = changeTeamName(10001, 10000001, "电池");
+    if(b){
+        cout<<"修改成功\n";
+    }else {
+        cout<<"修改失败\n";
+    }
+}
+
+void testDeleteTeam(){
+    bool b = deleteTeam(10001, 10000001);
+    if(b){
+        cout<<"删除成功\n";
+    }else {
+        cout<<"删除失败\n";
+    }
+}
+
+int main(){
+    testDeleteTeam();
+}
+----------------------------------------------------*/
