@@ -54,8 +54,8 @@ QPushButton::icon {
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../图片/返回双箭头.png</normaloff>../../图片/返回双箭头.png</iconset>
+     <iconset resource="ChatRoom.qrc">
+      <normaloff>:/img/return.png</normaloff>:/img/return.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -67,6 +67,8 @@ QPushButton::icon {
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ChatRoom.qrc"/>
+ </resources>
  <connections/>
 </ui>

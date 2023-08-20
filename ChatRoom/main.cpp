@@ -3,6 +3,7 @@
 #include"NewContacts.h"
 #include <QtWidgets/QApplication>
 #include <QApplication>
+#include <QStackedWidget>
 
 
 int main(int argc, char *argv[])

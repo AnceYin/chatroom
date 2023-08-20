@@ -29,12 +29,6 @@
     <QtUic Include="ChatRoom.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="ChatRoom.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="ChatRoom.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -58,6 +52,15 @@
     <ClCompile Include="Register.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ChatRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Add.h">
@@ -76,6 +79,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="Register.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ChatRoom.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -98,5 +104,13 @@
     <QtUic Include="Register.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImageItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

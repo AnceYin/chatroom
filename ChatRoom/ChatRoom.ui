@@ -34,22 +34,12 @@
 </string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QListView" name="listView">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>50</y>
-      <width>601</width>
-      <height>341</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QTextEdit" name="Message">
     <property name="geometry">
      <rect>
       <x>140</x>
       <y>400</y>
-      <width>481</width>
+      <width>491</width>
       <height>41</height>
      </rect>
     </property>
@@ -80,8 +70,8 @@
      <string/>
     </property>
     <property name="icon">
-     <iconset>
-      <normaloff>../../图片/搜索.png</normaloff>../../图片/搜索.png</iconset>
+     <iconset resource="ChatRoom.qrc">
+      <normaloff>:/img/serach.png</normaloff>:/img/serach.png</iconset>
     </property>
    </widget>
    <widget class="QLineEdit" name="Serach_LineEdit">
@@ -100,9 +90,9 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>140</x>
       <y>10</y>
-      <width>541</width>
+      <width>551</width>
       <height>31</height>
      </rect>
     </property>
@@ -121,7 +111,7 @@
      <rect>
       <x>10</x>
       <y>400</y>
-      <width>111</width>
+      <width>121</width>
       <height>41</height>
      </rect>
     </property>
@@ -140,11 +130,131 @@
      <string>Log out</string>
     </property>
    </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>50</y>
+      <width>601</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollArea_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>599</width>
+       <height>339</height>
+      </rect>
+     </property>
+     <widget class="QListWidget" name="listWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>601</width>
+        <height>341</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>121</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>119</width>
+       <height>339</height>
+      </rect>
+     </property>
+     <widget class="QListWidget" name="listWidget_MessageQueue">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>121</width>
+        <height>341</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="ChatRoom.qrc"/>
  </resources>
- <connections/>
+ <connections>
+  <connection>
+   <sender>Send</sender>
+   <signal>clicked()</signal>
+   <receiver>ChatRoomClass</receiver>
+   <slot>SendPushButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>687</x>
+     <y>419</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>684</x>
+     <y>454</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Log_out</sender>
+   <signal>clicked()</signal>
+   <receiver>ChatRoomClass</receiver>
+   <slot>LogOutPushButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>77</x>
+     <y>457</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Serach</sender>
+   <signal>clicked()</signal>
+   <receiver>ChatRoomClass</receiver>
+   <slot>SerachPushButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>16</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>16</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>SendPushButtonClicked()</slot>
+  <slot>LogOutPushButtonClicked()</slot>
+  <slot>SerachPushButtonClicked()</slot>
+ </slots>
 </ui>

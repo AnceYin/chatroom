@@ -45,7 +45,7 @@ public:
 "    margin-left: 0px;  // \345\260\206\345\233\276\346\240\207\347\232\204\345\267\246\350\276\271\350\267\235\350\256\276\344\270\2720\n"
 "}"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("../../\345\233\276\347\211\207/\350\277\224\345\233\236\345\217\214\347\256\255\345\244\264.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/img/return.png"), QSize(), QIcon::Normal, QIcon::Off);
         Return->setIcon(icon);
         Return->setIconSize(QSize(50, 50));
         NewContactsClass->setCentralWidget(centralWidget);

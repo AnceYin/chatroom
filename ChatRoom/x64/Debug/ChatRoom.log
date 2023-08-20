@@ -1,4 +1,4 @@
 ﻿  ChatRoom.cpp
-  main.cpp
   moc_ChatRoom.cpp
+  qrc_ChatRoom.cpp
   ChatRoom.vcxproj -> C:\Users\ASUS\Desktop\前端开发\ChatRoom\x64\Debug\ChatRoom.exe

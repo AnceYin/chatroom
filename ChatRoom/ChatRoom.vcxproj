@@ -32,7 +32,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.14.2_msvc2017_64</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;network;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -83,6 +83,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImageItem.cpp" />
+    <ClCompile Include="MessageItem.cpp" />
     <ClCompile Include="NewContacts.cpp" />
     <ClCompile Include="Profile.cpp" />
     <ClCompile Include="Register.cpp" />
@@ -91,7 +93,12 @@
     <QtUic Include="ChatRoom.ui" />
     <QtMoc Include="ChatRoom.h" />
     <ClCompile Include="Add.cpp" />
-    <ClCompile Include="ChatRoom.cpp" />
+    <ClCompile Include="ChatRoom.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="CreatGroup.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
@@ -118,6 +125,10 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Register.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ImageItem.h" />
+    <ClInclude Include="MessageItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
