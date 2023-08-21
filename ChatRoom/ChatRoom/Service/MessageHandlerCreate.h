@@ -1,23 +1,19 @@
 #pragma once
 #include <iostream>
 #include "../net.cpp"
-#include "../serialize/DataStream.h"
-#include "../serialize/Serializable.h"
 #include "MessageHandler.h"
 
-using namespace yazi::serialize;
-
-// ´´½¨Êý¾Ý´¦ÀíÀà¹¤³§Àà
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½à¹¤ï¿½ï¿½ï¿½ï¿½
 class MessageHandlerIndustry
 {
 public:
-	MessageHandlerIndustry(int msgType, int msgSize, DataStream ds) : messageType(msgType), messageSize(msgSize), ds(ds) {};
+	MessageHandlerIndustry(int msgType, int msgSize, std::string msg) : msgType(msgType), messageSize(msgSize), msg(msg) {};
 	MessageHandler* CreateMessageHandler();
 	~MessageHandlerIndustry();
 private:
-	int messageType;
+	int msgType;
 	int messageSize;
-	DataStream ds;
+	std::string msg;
 };
 
 

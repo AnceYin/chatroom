@@ -1,7 +1,7 @@
 #include "MessageHandlerCreate.h"
 
 MessageHandler* MessageHandlerIndustry::CreateMessageHandler() {
-	int msgType = this->messageType;
+	int msgType = this->msgType;
 	int msgSize = this->messageSize;
 
 	switch (msgType)
