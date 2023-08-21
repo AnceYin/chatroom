@@ -95,6 +95,8 @@ std::string Message_CREAT_TEAM_Handler::HandleMessage(const std::string& str) {
 
 std::vector<int> Message_CREAT_TEAM_Handler::MessageSentList(const std::string& str) {
 	std::vector<int> vs;
+	std::vector<std::string> v = splitString(str);
+	vs.push_back(std::stoi(v[1]));
 	return vs;
 }
 
