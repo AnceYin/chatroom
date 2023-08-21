@@ -56,7 +56,8 @@ std::vector<int> Message_SIGN_IN_Handler::MessageSentList(const std::string& str
 {
 	std::vector<int> vs;
 	std::vector<std::string> v = splitString(str);
-	vs.push_back(std::stoi(v[1]));
+	int res = userRegister(v[1], v[2]);
+	vs.push_back(res);
 
 	return vs;
 }

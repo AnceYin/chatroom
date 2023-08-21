@@ -3,7 +3,7 @@
 //
 #pragma once
 #define HOST "127.0.0.1"
-#define USERNAME "root"
-#define PASSWORD "0GRRUXrzq2nWp48X"
+#define USERNAME "debian-sys-maint"
+#define PASSWORD "meng0987612345"
 #define PORT 3306
-#define DATABASE "chatroom"
+#define DATABASE "ChatRoom"
