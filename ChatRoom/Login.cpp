@@ -1,4 +1,5 @@
 #include "Login.h"
+#include "ChatRoom.h"
 #include <QMessageBox>
 #include <QTcpSocket>
 #include "net.cpp"
@@ -67,6 +68,9 @@ void Login::onDataReceived(const QByteArray& data)
 					tr("登录成功，开始和他人聊天吧！"),
 					QMessageBox::Ok | QMessageBox::Cancel,
 					QMessageBox::Ok);
+				ChatRoom ch;
+				ch.show();
+				this->close();
 				break;
 			}
 			if (receData[i + 1] == "0") {
