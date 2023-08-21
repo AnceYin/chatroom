@@ -11,17 +11,14 @@
 
 #include "config/server_config.h"
 
-#include "serialize/DataStream.h"
-#include "serialize/Serializable.h"
-
 #include "Service/MessageHandler.h"
 #include "Service/MessageHandlerCreate.h"
 
-using namespace yazi::serialize;
+using namespace std;
 
 struct Client {
 	int sockfd;
-	string username;//用户编号
+	int user_id;//用户编号
 };
 
 // 保存所有客户端信息
@@ -35,7 +32,7 @@ int main(){
 	}
 
 	// 绑定本地ip和端口
-	struct sockaddr_in addr;
+	struct sockaddr_in addr {};
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	addr.sin_port = htons(55369);
@@ -62,7 +59,7 @@ int main(){
 	}
 
 	// 将监听的Socket加入epoll
-	struct epoll_event ev;
+	struct epoll_event ev {};
 	ev.events = EPOLLIN;
 	ev.data.fd = socketfd;
 
@@ -73,8 +70,8 @@ int main(){
 
 	// 循环监听
 	while (1) {
-		struct epoll_event evs[MAX_CONNECTIONS];
-		int n = epoll_wait(epld, evs, MAX_CONNECTIONS, -1);
+		struct epoll_event evs[MAX_CONNECTIONS_S];
+		int n = epoll_wait(epld, evs, MAX_CONNECTIONS_S, -1);
 
 		printf("11111");
 
@@ -86,7 +83,7 @@ int main(){
 		for (int i = 0; i < n; i++) {
 			int fd = evs[i].data.fd;
 			if (fd == socketfd) {
-				struct sockaddr_in client_addr;
+				struct sockaddr_in client_addr {};
 				socklen_t client_addr_len = sizeof(client_addr);
 				int client_sockfd = accept(socketfd, (struct sockaddr*)&client_sockfd, &client_addr_len);
 				if (client_sockfd < 0) {
@@ -95,7 +92,7 @@ int main(){
 				}
 
 				// 将客户端Socket加入epoll
-				struct epoll_event ev_client;
+				struct epoll_event ev_client {};
 				ev_client.events = EPOLLIN;
 				ev_client.data.fd = client_sockfd;
 				ret = epoll_ctl(epld, EPOLL_CTL_ADD, client_sockfd, &ev_client);
@@ -103,12 +100,12 @@ int main(){
 					printf("epoll_ctl error");
 					return -1;
 				}
-				printf("%s正在连接", client_addr.sin_addr.s_addr);
+				printf("%u正在连接", client_addr.sin_addr.s_addr);
 
 				// 保存客户信息
 				Client client;
 				client.sockfd = client_sockfd;
-				client.username = "";
+				client.user_id = NULL;
 
 				clients[client_sockfd] = client;
 			} 
@@ -129,19 +126,14 @@ int main(){
 					// 收到客户端消息
 					std::string msg(buffer, n);
 
-					if (!strcmp(msg.c_str(), "gun"))
-					{
-						close(epld);
-						close(socketfd);
-					}
-
-					if (buffer[0] == 1) break;
+					/*if (buffer[0] == 1) break;
 
 					for (auto& c : clients) {
 						write(c.first, buffer, n);
-					}
+					}*/
 
-					std::string msgType = msg.substr(0, 2);
+					std::string msgTypeStr = msg.substr(0, 2);
+					int msgType = std::stoi(msgTypeStr);
 
 					std::string remaining = msg.substr(2);
 
@@ -152,10 +144,10 @@ int main(){
 					MessageHandlerIndustry msgHandIn(msgType, msgSize, remaining);
 					MessageHandler* handler = msgHandIn.CreateMessageHandler();
 					std::string back_str = handler->HandleMessage(msgSize, remaining);
-					vector<string> sendList = handler->MessageSentList(msgSize, remaining);
+					vector<int> sendList = handler->MessageSentList(msgSize, remaining);
 
-					if (msgType == "01") {
-						clients[fd].username = sendList.front();
+					if (msgType == 0) {
+						clients[fd].user_id = sendList.front();
 					}
 					
 					// 根据返回发送名单发送报文

@@ -1,6 +1,7 @@
 #include "MessageHandler.h"
 #include "../serialize/DataStream.h"
 #include "../serialize/Serializable.h"
+#include "../net.cpp"
 #include <iostream>
 
 class Backend {
@@ -9,13 +10,13 @@ public:
         // 在构造函数中进行初始化操作，如初始化消息处理类的映射关系
     }
 
-    DataStream HandleIncomingMessage(const std::string& message) {
+    std::string HandleIncomingMessage(const std::string& message) {
         // 解析前端信息，获取消息类型、消息大小和内容
 
         // 根据消息类型创建相应的处理类
         MessageHandler* handler = nullptr;
-        if (messageType == 1) {
-            handler = new MessageType1Handler();
+        if (messageType == LOG_IN) {
+            handler = new Message_LOG_IN_Handler();
         }
         else if (messageType == 2) {
             handler = new MessageType2Handler();
