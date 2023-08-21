@@ -1,0 +1,2 @@
+﻿C:\Users\小豆娃\AppData\Local\QtMsBuild\qt_vars.targets(68,5): error : There's no Qt version assigned to project ChatRoom.vcxproj for configuration Release/Win32.
+C:\Users\小豆娃\AppData\Local\QtMsBuild\qt_vars.targets(68,5): error : Please set a Qt installation in 'Project|Properties|Configuration Properties|Qt Project Settings|Qt Installation'.

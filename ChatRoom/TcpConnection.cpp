@@ -9,7 +9,7 @@ TcpSingleton::TcpSingleton(QObject* parent) : QObject(parent)
 {
     m_tcpSocket = new QTcpSocket(this);
 
-    QString ip = "139.224.62.197";
+    QString ip = "127.0.0.1";
     unsigned short port = 55369;
     m_tcpSocket->connectToHost(QHostAddress(ip), port);
 
