@@ -1,9 +1,9 @@
 //
-// Êý¾Ý¿â²ÎÊýÉèÖÃ
+// ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
 #pragma once
-#define HOST "127.0.0.1"
+#define HOST "172.21.148.90"
 #define USERNAME "root"
-#define PASSWORD "0GRRUXrzq2nWp48X"
+#define PASSWORD "root"
 #define PORT 3306
-#define DATABASE "chatroom"
+#define DATABASE "test"

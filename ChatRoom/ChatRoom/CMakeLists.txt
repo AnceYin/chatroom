@@ -7,14 +7,12 @@ set(CMAKE_BUILD_TYPE Debug)
 # 设置编译器标准                                                                                        
 set(CMAKE_CXX_STANDARD 20)                                                                              
  
-#根据自己版本选择
-set(CMAKE_CXX_COMPILER /usr/bin/g++-13)
 
 #project目录路径
 # 添加包含目录                                            
-include_directories(/home/chmexi/projects/include)                                                                                                                                                        
+include_directories(/home/ance/GitHub/LinkMySQL/projects/include)                                                                                                                                                        
 # 添加链接库的目录                                                                                      
-link_directories(/home/chmexi/projects/lib)          
+link_directories(/home/ance/GitHub/LinkMySQL/projects/lib)          
 
 add_executable (ChatRoom  "main.cpp"  "net.cpp"   "Service/MessageHandlerCreate.h" "Service/MessageHandlerCreate.cpp" "Service/MessageHandler.h" "Service/MessageHandler.cpp" "DAO/LogInDao.h"  "DAO/LogInDao.cpp")
 
