@@ -6,45 +6,40 @@ MessageHandler* MessageHandlerIndustry::CreateMessageHandler() {
 
 	switch (msgType)
 	{
-	case LOG_IN:
+	case LOG_IN://登录
 		MessageHandler* handler = new Message_LOG_IN_Handler();
 		return handler;
 		break;
-	case SIGN_IN:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case SIGN_IN://注册
+		MessageHandler* handler = new Message_SIGN_IN_Handler();
 		return handler;
 		break;
-	case NAME_CHANGE:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case NAME_CHANGE://改昵称
+		MessageHandler* handler = new Message_NAME_CHANGE_Handler();
 		return handler;
 		break;
-	case PWD_CHANGE:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case PWD_CHANGE://改密码
+		MessageHandler* handler = new Message_PWD_CHANGE_Handler();
 		return handler;
 		break;
-	case GROUP_CHAT:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case CREAT_TEAM://建群
+		MessageHandler* handler = new Message_CREAT_TEAM_Handler();
 		return handler;
 		break;
-	case FRIEND_CHAT:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case JOIN_TEAM://加群
+		MessageHandler* handler = new Message_JOIN_TEAM_Handler();
 		return handler;
 		break;
-	case DELETE_FRIEND:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case GET_FORWARDING_IDS:// 获取转发列表
+		MessageHandler* handler = new Message_GET_FORWARDING_IDS_Handler();
 		return handler;
 		break;
-	case ADD_FRIEND:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case CHANGE_TEAM_NAME:// 改群名
+		MessageHandler* handler = new Message_CHANGE_TEAM_NAME_Handler();
 		return handler;
 		break;
-	case ADD_GROUP:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
+	case DELETE_TEAM:
+		MessageHandler* handler = new Message_DELETE_TEAM_Handler();
 		return handler;
 		break;
-	case CREATE_GROUP:
-		MessageHandler* handler = new Message_LOG_IN_Handler();
-		return handler;
-		break;
-	}
 }

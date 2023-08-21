@@ -73,7 +73,7 @@ int userRegister(string username, string password) {
 }
 
 // 更改用户名函数
-void changeUsername(int user_id, string new_username) {
+bool changeUsername(int user_id, string new_username) {
     try {
         mysql::MySQL_Driver* driver;
         Connection* con;
@@ -90,10 +90,12 @@ void changeUsername(int user_id, string new_username) {
 
         delete pstmt;
         delete con;
+        return true;
     }
     catch (SQLException& e) {
         cout << "SQL Exception: " << e.what() << endl;
     }
+    return false;
 }
 
 // 更改密码函数
@@ -172,7 +174,7 @@ int createTeam(int user_id, string team_name) {
 }
 
 // 加入群聊函数
-void joinTeam(int user_id, int team_id) {
+bool joinTeam(int user_id, int team_id) {
     try {
         mysql::MySQL_Driver* driver;
         Connection* con;
@@ -189,10 +191,12 @@ void joinTeam(int user_id, int team_id) {
 
         delete pstmt;
         delete con;
+        return true;
     }
     catch (SQLException& e) {
         cout << "SQL Exception: " << e.what() << endl;
     }
+    return false;
 }
 
 // 获取要转发的ID列表
