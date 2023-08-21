@@ -144,7 +144,7 @@ border-style:outset;
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="create">
          <property name="font">
           <font>
            <family>Cambria</family>
