@@ -16,7 +16,7 @@ include_directories(/home/chmexi/projects/include)
 # 添加链接库的目录                                                                                      
 link_directories(/home/chmexi/projects/lib)          
 
-add_executable (ChatRoom  "main.cpp"  "net.cpp" "serialize/DataStream.h" "serialize/Serializable.h" "serialize/DataStream.cpp"  "Service/MessageHandlerCreate.h" "Service/MessageHandlerCreate.cpp" "Service/MessageHandler.h" "Service/MessageHandler.cpp" "DAO/LogInDao.h"  "DAO/LogInDao.cpp")
+add_executable (ChatRoom  "main.cpp"  "net.cpp"   "Service/MessageHandlerCreate.h" "Service/MessageHandlerCreate.cpp" "Service/MessageHandler.h" "Service/MessageHandler.cpp" "DAO/LogInDao.h"  "DAO/LogInDao.cpp")
 
 target_link_libraries(ChatRoom mysqlcppconn)  # 链接 MySQL 连接驱动程序库
 

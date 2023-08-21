@@ -2,8 +2,8 @@
 // 数据库参数设置
 //
 #pragma once
-#define HOST "139.224.62.197"
+#define HOST "127.0.0.1"
 #define USERNAME "root"
-#define PASSWORD "dianchi"
+#define PASSWORD "0GRRUXrzq2nWp48X"
 #define PORT 3306
 #define DATABASE "chatroom"

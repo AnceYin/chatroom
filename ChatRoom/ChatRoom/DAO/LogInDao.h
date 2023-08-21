@@ -11,13 +11,13 @@ using namespace std;
 using namespace sql;
 
 // 用户登录函数
-bool userLogin(string user_id, string password);
+bool userLogin(int user_id, string password);
 
 // 用户注册函数
 int userRegister(string username, string password);
 
 // 更改用户名函数
-void changeUsername(int user_id, string new_username);
+bool changeUsername(int user_id, string new_username);
 
 // 更改密码函数
 bool changePassword(int user_id, string password, string new_password);
@@ -26,7 +26,7 @@ bool changePassword(int user_id, string password, string new_password);
 int createTeam(int user_id, string team_name);
 
 // 加入群聊函数
-void joinTeam(int user_id, int team_id); 
+bool joinTeam(int user_id, int team_id); 
 
 // 获取要转发的ID列表
 vector<int> getForwardingIDs(int user_id, int team_id);

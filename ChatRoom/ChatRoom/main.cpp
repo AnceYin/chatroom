@@ -35,7 +35,7 @@ int main(){
 	struct sockaddr_in addr {};
 	addr.sin_family = AF_INET;
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	addr.sin_port = htons(55369);
+	addr.sin_port = htons(55360);
 
 	std::cout << addr.sin_addr.s_addr << std::endl << socketfd;
 
@@ -105,7 +105,7 @@ int main(){
 				// 保存客户信息
 				Client client;
 				client.sockfd = client_sockfd;
-				client.user_id = NULL;
+				client.user_id = 0;
 
 				clients[client_sockfd] = client;
 			} 
@@ -143,17 +143,21 @@ int main(){
 					// 选择处理函数
 					MessageHandlerIndustry msgHandIn(msgType, msgSize, remaining);
 					MessageHandler* handler = msgHandIn.CreateMessageHandler();
-					std::string back_str = handler->HandleMessage(msgSize, remaining);
-					vector<int> sendList = handler->MessageSentList(msgSize, remaining);
+					std::string back_str = handler->HandleMessage(remaining);
+					vector<int> sendList = handler->MessageSentList(remaining);
 
-					if (msgType == 0) {
+					if (msgType == 0 && sendList.size() > 0) {
+						clients[fd].user_id = sendList.front();
+					}
+
+					if (msgType == 1 && sendList.size() > 0) {
 						clients[fd].user_id = sendList.front();
 					}
 					
 					// 根据返回发送名单发送报文
 					for (auto& c : sendList) {
 						for (auto& client : clients) {
-							if (client.second.username == c) {
+							if (client.second.user_id == c) {
 								write(client.first, back_str.c_str(), back_str.size());
 							}
 						}

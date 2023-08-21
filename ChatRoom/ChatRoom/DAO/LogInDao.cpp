@@ -1,6 +1,6 @@
 #include "LogInDao.h"
 
-bool userLogin(string user_id, string password) {
+bool userLogin(int user_id, string password) {
     try {
         mysql::MySQL_Driver* driver;
         Connection* con;
@@ -11,7 +11,7 @@ bool userLogin(string user_id, string password) {
         // Ö´ÐÐµÇÂ¼²éÑ¯
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Users WHERE user_id = ? AND password = ?");
-        pstmt->setString(1, user_id);
+        pstmt->setInt(1, user_id);
         pstmt->setString(2, password);
         ResultSet* res = pstmt->executeQuery();
         bool success = res->next();
@@ -60,7 +60,7 @@ int userRegister(string username, string password) {
     }
 }
 
-void changeUsername(int user_id, string new_username) {
+bool changeUsername(int user_id, string new_username) {
     try {
         mysql::MySQL_Driver* driver;
         Connection* con;
@@ -77,9 +77,11 @@ void changeUsername(int user_id, string new_username) {
 
         delete pstmt;
         delete con;
+        return true;
     }
     catch (SQLException& e) {
         cout << "SQL Exception: " << e.what() << endl;
+        return false;
     }
 }
 
@@ -156,7 +158,7 @@ int createTeam(int user_id, string team_name) {
     }
 }
 
-void joinTeam(int user_id, int team_id) {
+bool joinTeam(int user_id, int team_id) {
     try {
         mysql::MySQL_Driver* driver;
         Connection* con;

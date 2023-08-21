@@ -1,12 +1,9 @@
 #pragma once
 #include "../net.cpp"
-#include "../serialize/std::string.h"
-#include "../serialize/Serializable.h"
 #include <iostream>
 #include <vector>
 #include <string>
-
-using namespace yazi::serialize;
+#include "../DAO/LogInDao.h"
 
 
 
@@ -22,33 +19,9 @@ using namespace yazi::serialize;
  * 将数据库返回的值以"消息类型|消息体"的形式返回
  * 
 */
-std::vector<std::string> splitString(const std::string &str)
-{
-	std::vector<std::string> substrings;
-	std::string substring;
-	for (char c : str)
-	{
-		if (c == '|')
-		{
-			substrings.push_back(substring);
-			substring.clear();
-		}
-		else
-		{
-			substring += c;
-		}
-	}
-	if (!substring.empty())
-	{
-		substrings.push_back(substring);
-	}
-	return substrings;
-}
+std::vector<std::string> splitString(const std::string& str);
 
-std::string boolToString(bool b)
-{
-	return b ? "1" : "0";
-}
+std::string boolToString(bool b);
 
 class MessageHandler
 {
@@ -61,156 +34,87 @@ public:
 private:
 };
 
+
 class Message_LOG_IN_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：00|10001|...   	//从|...到|分割
-		std::vector<std::string> v = splitString(str);
-		return "00|" + boolToString(userLogin(std::stoi(v[1]), v[2]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
 };
+
 
 class Message_SIGN_IN_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：01|...|...返回ID
-		std::vector<std::string> v = splitString(str);
-		return std::string("01|") + std::to_string(userRegister(v[1], v[2]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
 };
+
 
 class Message_NAME_CHANGE_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：02|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("02|") + boolToString(changeUsername(std::stoi(v[1]), v[2]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
 };
 
 class Message_PWD_CHANGE_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：03|...|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("03|") + boolToString(changePassword(std::stoi(v[1]), v[2], v[3]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
 };
+
 
 class Message_CREAT_TEAM_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：04|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("04|") + std::to_string(createTeam(std::stoi(v[1]), v[2]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
+	
 };
+
 
 class Message_JOIN_TEAM_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：05|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("05|") + boolToString(joinTeam(std::stoi(v[1]), std::stoi(v[2])));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
 };
+
 
 class Message_GET_FORWARDING_IDS_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		return str;
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		// 格式：06|...|...
-		std::vector<std::string> v = splitString(str);
-		return getForwardingIDs(std::stoi(v[1]), std::stoi(v[2]));
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
+	
 };
 
 class Message_CHANGE_TEAM_NAME_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：07|...|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("07|") + boolToString(changeTeamName(std::stoi(v[1]), std::stoi(v[2]), v[3]));
-	}
+	std::string HandleMessage(const std::string& str) override;
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
+	
 };
 
 class Message_DELETE_TEAM_Handler : public MessageHandler
 {
 public:
-	std::string HandleMessage(const std::string &str) override
-	{
-		// 格式：08|...|...
-		std::vector<std::string> v = splitString(str);
-		return std::string("08|") + boolToString(deleteTeam(std::stoi(v[1]), std::stoi(v[2])));
-	}
+	std::string HandleMessage(const std::string& str) override;
+	
 
-	std::vector<int> MessageSentList(const std::string &str) override
-	{
-		std::vector<int> vs;
-		return vs;
-	}
+	std::vector<int> MessageSentList(const std::string& str) override;
+	
 };
 
 /*
