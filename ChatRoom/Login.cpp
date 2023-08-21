@@ -6,7 +6,7 @@
 #include <QString>
 #include <QTextCodec>
 
-std::string qstrToStdStr(const QString& qstr)
+std::string qstrToStdStr2(const QString& qstr)
 {
 	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
 	QByteArray encodedData = codec->fromUnicode(qstr);

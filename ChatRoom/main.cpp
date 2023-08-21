@@ -12,6 +12,6 @@ int main(int argc, char* argv[])
     ChatRoom w;
     Login l;
     CreatGroup c;
-    c.show();
+    l.show();
     return a.exec();
 }

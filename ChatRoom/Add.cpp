@@ -5,19 +5,6 @@
 #include <QString>
 #include <QTextCodec>
 
-std::string qstrToStdStr(const QString& qstr)
-{
-	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
-	QByteArray encodedData = codec->fromUnicode(qstr);
-	return encodedData.constData();
-}
-
-QString stdStrToQstr(const std::string& stdStr)
-{
-	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
-	QString qstr = codec->toUnicode(stdStr.c_str());
-	return qstr;
-}
 
 Add::Add(QWidget *parent)
 	: QMainWindow(parent)
