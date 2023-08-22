@@ -1,9 +1,9 @@
 //
-// Êý¾Ý¿â²ÎÊýÉèÖÃ
+// ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //
 #pragma once
-#define HOST "127.0.0.1"
-#define USERNAME "debian-sys-maint"
-#define PASSWORD "meng0987612345"
+#define HOST "139.224.62.197"
+#define USERNAME "root"
+#define PASSWORD "dianchi"
 #define PORT 3306
-#define DATABASE "ChatRoom"
+#define DATABASE "test"

@@ -175,9 +175,11 @@ bool joinTeam(int user_id, int team_id) {
 
         delete pstmt;
         delete con;
+        return true;
     }
     catch (SQLException& e) {
         cout << "SQL Exception: " << e.what() << endl;
+        return false;
     }
 }
 
