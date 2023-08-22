@@ -4,7 +4,8 @@
 #include "net.cpp"
 #include <QString>
 #include <QTextCodec>
-
+#pragma execution_character_set("UTF-8")
+extern QString user_id;
 
 Add::Add(QWidget *parent)
 	: QMainWindow(parent)
@@ -27,7 +28,6 @@ void Add::CreatPushButtonClicked()
 	if (ui.lineEdit->text() != NULL)
 	{
 		QString team_name = ui.lineEdit->text();
-		QString user_id = "001";
 		QString data = "04|";
 		data.append(user_id);
 		data.append("|");
@@ -51,7 +51,6 @@ void Add::onDataReceived(const QByteArray& data) {
 	char* ptr;
 	ba = msg.toLatin1();
 	ptr = ba.data();
-
 	QMessageBox::question(this,
 		tr("´´½¨ÈºÁÄ"),
 		tr(ptr),

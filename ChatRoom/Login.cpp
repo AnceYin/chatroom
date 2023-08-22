@@ -5,6 +5,8 @@
 #include "net.cpp"
 #include <QString>
 #include <QTextCodec>
+#pragma execution_character_set("UTF-8")
+QString user_id;
 
 std::string qstrToStdStr2(const QString& qstr)
 {
@@ -37,9 +39,9 @@ Login::~Login()
 void Login::LoginPushButtonClicked()
 {
 	// 获取用户输入
-	QString username = ui.usernameLineEdit->text();
+	user_id = ui.usernameLineEdit->text();
 	QString password = ui.passwordLineEdit->text();
-	QString data = "00|"+username + "|" + password;
+	QString data = "00|"+user_id + "|" + password;
 	QByteArray sData = data.toLatin1();
 
 	m_tcpConn->sendData(sData, 40);

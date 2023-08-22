@@ -5,7 +5,8 @@
 #include "net.cpp"
 #include <QString>
 #include <QTextCodec>
-
+#pragma execution_character_set("UTF-8")
+extern QString user_id;
 
 
 CreatGroup::CreatGroup(QWidget *parent)
@@ -55,7 +56,6 @@ void CreatGroup::SearchClicked() {
 	if (ui.label->text() == "Join a Group") {
 		//¼ÓÈëÈºÁÄ
 		QString team_id = ui.lineEdit->text();
-		QString user_id = "001";
 		QString data = "05|";
 		data.append(user_id);
 		data.append("|");
