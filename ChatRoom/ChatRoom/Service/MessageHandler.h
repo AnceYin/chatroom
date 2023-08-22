@@ -117,6 +117,18 @@ public:
 	
 };
 
+class Message_GET_TEAM_ID_Handler : public MessageHandler
+{
+public:
+	std::string HandleMessage(const std::string& str) override;
+	
+
+	std::vector<int> MessageSentList(const std::string& str) override;
+	
+};
+
+
+
 /*
 
 int main()

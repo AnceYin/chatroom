@@ -39,7 +39,11 @@ MessageHandler* MessageHandlerIndustry::CreateMessageHandler() {
 		handler = new Message_CHANGE_TEAM_NAME_Handler();
 		return handler;
 		break;
-	case DELETE_TEAM:
+	case DELETE_TEAM: //删除群聊
+		handler = new Message_DELETE_TEAM_Handler();
+		return handler;
+		break;
+	case GET_TEAM_ID: // 获取指定用户所在的群聊列表
 		handler = new Message_DELETE_TEAM_Handler();
 		return handler;
 		break;

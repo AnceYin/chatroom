@@ -8,7 +8,7 @@ bool userLogin(int user_id, string password) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // Ö´ÐÐµÇÂ¼²éÑ¯
+        // Ö´ï¿½Ðµï¿½Â¼ï¿½ï¿½Ñ¯
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Users WHERE user_id = ? AND password = ?");
         pstmt->setInt(1, user_id);
@@ -35,14 +35,14 @@ int userRegister(string username, string password) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // Ö´ÐÐ×¢²á²éÑ¯
+        // Ö´ï¿½ï¿½×¢ï¿½ï¿½ï¿½Ñ¯
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)");
         pstmt->setString(1, username);
         pstmt->setString(2, password);
         pstmt->execute();
 
-        // »ñÈ¡Éú³ÉµÄuser_id
+        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½Éµï¿½user_id
         Statement* stmt = con->createStatement();
         ResultSet* res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
         res->next();
@@ -68,7 +68,7 @@ bool changeUsername(int user_id, string new_username) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // Ö´ÐÐ¸ü¸ÄÓÃ»§Ãû²Ù×÷
+        // Ö´ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("UPDATE Users SET username = ? WHERE user_id = ?");
         pstmt->setString(1, new_username);
@@ -93,7 +93,7 @@ bool changePassword(int user_id, string password, string new_password) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ÑéÖ¤ÃÜÂë
+        // ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½ï¿½
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Users WHERE user_id = ? AND password = ?");
         pstmt->setInt(1, user_id);
@@ -102,7 +102,7 @@ bool changePassword(int user_id, string password, string new_password) {
         bool success = res->next();
 
         if (success) {
-            // ¸üÐÂÃÜÂë
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pstmt = con->prepareStatement("UPDATE Users SET password = ? WHERE user_id = ?");
             pstmt->setString(1, new_password);
             pstmt->setInt(2, user_id);
@@ -128,19 +128,19 @@ int createTeam(int user_id, string team_name) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ´´½¨ÈºÁÄ
+        // ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("INSERT INTO Teams (team_name, creator_id) VALUES (?, ?)");
         pstmt->setString(1, team_name);
         pstmt->setInt(2, user_id);
         pstmt->execute();
 
-        // »ñÈ¡Éú³ÉµÄteam_id
+        // ï¿½ï¿½È¡ï¿½ï¿½ï¿½Éµï¿½team_id
         Statement* stmt = con->createStatement();
         ResultSet* res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
         res->next();
         int team_id = res->getInt(1);
-        // ½«´´½¨Õß¼ÓÈëTeamMember±í
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½TeamMemberï¿½ï¿½
         pstmt = con->prepareStatement("INSERT INTO TeamMember (group_id, member_id) VALUES (?, ?)");
         pstmt->setInt(1, team_id);
         pstmt->setInt(2, user_id);
@@ -166,7 +166,7 @@ bool joinTeam(int user_id, int team_id) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ¼ÓÈëÈºÁÄ
+        // ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("INSERT INTO TeamMember (group_id, member_id) VALUES (?, ?)");
         pstmt->setInt(1, team_id);
@@ -190,14 +190,14 @@ vector<int> getForwardingIDs(int user_id, int team_id) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ²éÑ¯ÈºÁÄÖÐÆäËûÓÃ»§µÄid
+        // ï¿½ï¿½Ñ¯Èºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½id
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT member_id FROM TeamMember WHERE group_id = ? AND member_id != ?");
         pstmt->setInt(1, team_id);
         pstmt->setInt(2, user_id);
         ResultSet* res = pstmt->executeQuery();
 
-        // ½«Òª×ª·¢µÄIDÌí¼Óµ½×ª·¢ÁÐ±íÖÐ
+        // ï¿½ï¿½Òª×ªï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½Óµï¿½×ªï¿½ï¿½ï¿½Ð±ï¿½ï¿½ï¿½
         while (res->next()) {
             int member_id = res->getInt("member_id");
             forwardingIDs.push_back(member_id);
@@ -211,7 +211,7 @@ vector<int> getForwardingIDs(int user_id, int team_id) {
         cout << "SQL Exception: " << e.what() << endl;
     }
 
-    // ·µ»Ø×ª·¢ÁÐ±í
+    // ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½Ð±ï¿½
     return forwardingIDs;
 }
 
@@ -223,7 +223,7 @@ bool changeTeamName(int user_id, int team_id, string new_team_name) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ¸ù¾Ýteam_idÅÐ¶ÏÊÇ·ñÎªuser_id
+        // ï¿½ï¿½ï¿½ï¿½team_idï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªuser_id
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
         pstmt->setInt(1, team_id);
@@ -232,7 +232,7 @@ bool changeTeamName(int user_id, int team_id, string new_team_name) {
         bool success = res->next();
 
         if (success) {
-            // ¸ü¸ÄÈºÃû
+            // ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½
             pstmt = con->prepareStatement("UPDATE Teams SET team_name = ? WHERE team_id = ?");
             pstmt->setString(1, new_team_name);
             pstmt->setInt(2, team_id);
@@ -258,7 +258,7 @@ bool deleteTeam(int user_id, int team_id) {
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
 
-        // ¸ù¾Ýteam_idÅÐ¶ÏÊÇ·ñÎªuser_id
+        // ï¿½ï¿½ï¿½ï¿½team_idï¿½Ð¶ï¿½ï¿½Ç·ï¿½Îªuser_id
         PreparedStatement* pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
         pstmt->setInt(1, team_id);
@@ -267,12 +267,12 @@ bool deleteTeam(int user_id, int team_id) {
         bool success = res->next();
 
         if (success) {
-            // ÇåÀíTeamMember±íÖÐÏà¹ØÄÚÈÝ
+            // ï¿½ï¿½ï¿½ï¿½TeamMemberï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pstmt = con->prepareStatement("DELETE FROM TeamMember WHERE group_id = ?");
             pstmt->setInt(1, team_id);
             pstmt->execute();
 
-            // ÇåÀíTeams±íÖÐÏà¹ØÄÚÈÝ
+            // ï¿½ï¿½ï¿½ï¿½Teamsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             pstmt = con->prepareStatement("DELETE FROM Teams WHERE team_id = ?");
             pstmt->setInt(1, team_id);
             pstmt->execute();
@@ -287,4 +287,30 @@ bool deleteTeam(int user_id, int team_id) {
         cout << "SQL Exception: " << e.what() << endl;
         return false;
     }
+}
+
+vector<int> getJoinedGroupIDs(int user_id) {
+  vector<int> groupIDs;
+  try {
+    mysql::MySQL_Driver* driver;
+    Connection* con;
+    driver = mysql::get_mysql_driver_instance();
+    con = driver->connect(HOST, USERNAME, PASSWORD);
+    con->setSchema(DATABASE);
+    PreparedStatement* pstmt;
+    pstmt = con->prepareStatement("SELECT group_id FROM TeamMember WHERE member_id = ?");
+    pstmt->setInt(1, user_id);
+    ResultSet* res = pstmt->executeQuery();
+    while (res->next()) {
+      int group_id = res->getInt("group_id");
+      groupIDs.push_back(group_id);
+    }
+    delete res;
+    delete pstmt;
+    delete con;
+  }
+  catch (SQLException& e) {
+    cout << "SQL Exception: " << e.what() << endl;
+  }
+  return groupIDs;
 }
