@@ -10,8 +10,11 @@ ChatRoom::ChatRoom(QWidget *parent)
     ui.setupUi(this);
     m_tcpConn = TcpSingleton::instance();
     // 发送初始化报文 返回09|team_id1|team_id2.....
-    QString msgIni = "09|" + user_id;
-    m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size())
+    // QString msgIni = "09|" + user_id;
+    // m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
+
+    ui.Message->setText(user_id);
+
     //bool state = m_tcpConn->waitForConnected(1000);
     /*if (state) {
         isConnected = true;

@@ -67,6 +67,7 @@ void CreatGroup::SearchClicked() {
 
 void CreatGroup::onDataReceived(const QByteArray& data) {
 	QString receData = QString(data);
+	if (receData[0] != '0' || receData[1] != '5') return;
 	for (int i = 0; i < receData.length(); i++) {
 		if (receData[i] == "|") {
 			if (receData[i + 1] == "1") {
@@ -77,7 +78,7 @@ void CreatGroup::onDataReceived(const QByteArray& data) {
 					QMessageBox::Ok);
 				break;
 			}
-			if (receData[i + 1] == "0") {
+			else if (receData[i + 1] == "0") {
 				QMessageBox::question(this,
 					tr("弹窗标题"),
 					tr("加入失败！请检查网络原因..."),

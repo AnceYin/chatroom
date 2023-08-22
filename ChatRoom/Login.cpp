@@ -8,20 +8,6 @@
 #pragma execution_character_set("UTF-8")
 QString user_id;
 
-std::string qstrToStdStr2(const QString& qstr)
-{
-	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
-	QByteArray encodedData = codec->fromUnicode(qstr);
-	return encodedData.constData();
-}
-
-QString stdStrToQstr(const std::string& stdStr)
-{
-	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
-	QString qstr = codec->toUnicode(stdStr.c_str());
-	return qstr;
-}
-
 Login::Login(QWidget* parent)
 	: QMainWindow(parent)
 {
@@ -44,7 +30,7 @@ void Login::LoginPushButtonClicked()
 	QString data = "00|"+user_id + "|" + password;
 	QByteArray sData = data.toLatin1();
 
-	m_tcpConn->sendData(sData, 40);
+	m_tcpConn->sendData(sData, sData.size());
 	
 }
 
@@ -62,9 +48,11 @@ void Login::ForgetPasswordClicked()
 void Login::onDataReceived(const QByteArray& data)
 {
 	QString receData = QString(data);
+	if (receData[0] != "0" || receData[1] != "0") return;
 	for (int i = 0; i < receData.length(); i++) {
 		if (receData[i] == "|") {
 			if (receData[i + 1] == "1") {
+				user_id = ui.usernameLineEdit->text();
 				QMessageBox::question(this,
 					tr("登录"),
 					tr("登录成功，开始和他人聊天吧！"),

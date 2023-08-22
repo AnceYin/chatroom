@@ -40,6 +40,7 @@ void Add::CreatPushButtonClicked()
 void Add::onDataReceived(const QByteArray& data) {
 	QString receData = QString(data);
 	QString team_id;
+	if (receData[0] != "0" || receData[1] != "4") return;
 	for (int i = 3; i < receData.length() - 3; i++)
 	{
 		team_id.append(receData[i]);
