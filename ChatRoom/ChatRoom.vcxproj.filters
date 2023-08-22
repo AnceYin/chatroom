@@ -68,6 +68,13 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="serialize\DataStream.cpp">
+    <ClCompile Include="ChatRoom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,6 +98,7 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="TcpConnection.h">
+    <QtMoc Include="ChatRoom.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -119,6 +127,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="serialize\Serializable.h">
+    <ClInclude Include="ImageItem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

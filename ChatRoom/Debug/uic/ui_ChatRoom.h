@@ -14,9 +14,10 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
+#include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QScrollArea>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QWidget>
 
@@ -26,13 +27,18 @@ class Ui_ChatRoomClass
 {
 public:
     QWidget *centralWidget;
-    QListView *listView;
     QTextEdit *Message;
     QPushButton *Send;
     QPushButton *Serach;
     QLineEdit *Serach_LineEdit;
     QLabel *label;
     QPushButton *Log_out;
+    QScrollArea *scrollArea;
+    QWidget *scrollArea_2;
+    QListWidget *listWidget;
+    QScrollArea *scrollArea_3;
+    QWidget *scrollAreaWidgetContents;
+    QListWidget *listWidget_MessageQueue;
 
     void setupUi(QMainWindow *ChatRoomClass)
     {
@@ -49,12 +55,9 @@ public:
 ""));
         centralWidget = new QWidget(ChatRoomClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QString::fromUtf8("listView"));
-        listView->setGeometry(QRect(140, 50, 601, 341));
         Message = new QTextEdit(centralWidget);
         Message->setObjectName(QString::fromUtf8("Message"));
-        Message->setGeometry(QRect(140, 400, 481, 41));
+        Message->setGeometry(QRect(140, 400, 491, 41));
         Send = new QPushButton(centralWidget);
         Send->setObjectName(QString::fromUtf8("Send"));
         Send->setGeometry(QRect(640, 400, 101, 41));
@@ -62,28 +65,53 @@ public:
         Serach->setObjectName(QString::fromUtf8("Serach"));
         Serach->setGeometry(QRect(0, 10, 31, 31));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("../../\345\233\276\347\211\207/\346\220\234\347\264\242.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/img/serach.png"), QSize(), QIcon::Normal, QIcon::Off);
         Serach->setIcon(icon);
         Serach_LineEdit = new QLineEdit(centralWidget);
         Serach_LineEdit->setObjectName(QString::fromUtf8("Serach_LineEdit"));
         Serach_LineEdit->setGeometry(QRect(40, 10, 91, 31));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(150, 10, 541, 31));
+        label->setGeometry(QRect(140, 10, 551, 31));
         QFont font;
         font.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
         font.setPointSize(14);
         label->setFont(font);
         Log_out = new QPushButton(centralWidget);
         Log_out->setObjectName(QString::fromUtf8("Log_out"));
-        Log_out->setGeometry(QRect(10, 400, 111, 41));
+        Log_out->setGeometry(QRect(10, 400, 121, 41));
         Log_out->setFont(font);
         Log_out->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    text-align: left;\n"
 "}"));
+        scrollArea = new QScrollArea(centralWidget);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        scrollArea->setGeometry(QRect(140, 50, 601, 341));
+        scrollArea->setWidgetResizable(true);
+        scrollArea_2 = new QWidget();
+        scrollArea_2->setObjectName(QString::fromUtf8("scrollArea_2"));
+        scrollArea_2->setGeometry(QRect(0, 0, 599, 339));
+        listWidget = new QListWidget(scrollArea_2);
+        listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setGeometry(QRect(0, 0, 601, 341));
+        scrollArea->setWidget(scrollArea_2);
+        scrollArea_3 = new QScrollArea(centralWidget);
+        scrollArea_3->setObjectName(QString::fromUtf8("scrollArea_3"));
+        scrollArea_3->setGeometry(QRect(10, 50, 121, 341));
+        scrollArea_3->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 119, 339));
+        listWidget_MessageQueue = new QListWidget(scrollAreaWidgetContents);
+        listWidget_MessageQueue->setObjectName(QString::fromUtf8("listWidget_MessageQueue"));
+        listWidget_MessageQueue->setGeometry(QRect(0, 0, 121, 341));
+        scrollArea_3->setWidget(scrollAreaWidgetContents);
         ChatRoomClass->setCentralWidget(centralWidget);
 
         retranslateUi(ChatRoomClass);
+        QObject::connect(Send, SIGNAL(clicked()), ChatRoomClass, SLOT(SendPushButtonClicked()));
+        QObject::connect(Log_out, SIGNAL(clicked()), ChatRoomClass, SLOT(LogOutPushButtonClicked()));
+        QObject::connect(Serach, SIGNAL(clicked()), ChatRoomClass, SLOT(SerachPushButtonClicked()));
 
         QMetaObject::connectSlotsByName(ChatRoomClass);
     } // setupUi

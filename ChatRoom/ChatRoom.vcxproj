@@ -145,6 +145,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="net.cpp" />
+    <ClCompile Include="ImageItem.cpp" />
+    <ClCompile Include="MessageItem.cpp" />
     <ClCompile Include="NewContacts.cpp" />
     <ClCompile Include="Profile.cpp" />
     <ClCompile Include="Register.cpp" />
@@ -156,7 +158,12 @@
     <QtUic Include="ChatRoom.ui" />
     <QtMoc Include="ChatRoom.h" />
     <ClCompile Include="Add.cpp" />
-    <ClCompile Include="ChatRoom.cpp" />
+    <ClCompile Include="ChatRoom.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="CreatGroup.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,6 +195,8 @@
     <ClInclude Include="serialize\DataStream.h" />
     <ClInclude Include="serialize\Serializable.h" />
     <QtMoc Include="TcpConnection.h" />
+    <ClInclude Include="ImageItem.h" />
+    <ClInclude Include="MessageItem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

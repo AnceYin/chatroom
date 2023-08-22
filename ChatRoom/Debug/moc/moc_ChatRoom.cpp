@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ChatRoom_t {
-    QByteArrayData data[7];
-    char stringdata0[116];
+    QByteArrayData data[9];
+    char stringdata0[133];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,13 +37,16 @@ QT_MOC_LITERAL(1, 9, 23), // "SerachPushButtonClicked"
 QT_MOC_LITERAL(2, 33, 0), // ""
 QT_MOC_LITERAL(3, 34, 23), // "LogOutPushButtonClicked"
 QT_MOC_LITERAL(4, 58, 21), // "SendPushButtonClicked"
-QT_MOC_LITERAL(5, 80, 20), // "AddPushButtonClicked"
-QT_MOC_LITERAL(6, 101, 14) // "MessageClicked"
+QT_MOC_LITERAL(5, 80, 15), // "read_ServerData"
+QT_MOC_LITERAL(6, 96, 14), // "MessageClicked"
+QT_MOC_LITERAL(7, 111, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(8, 128, 4) // "item"
 
     },
     "ChatRoom\0SerachPushButtonClicked\0\0"
     "LogOutPushButtonClicked\0SendPushButtonClicked\0"
-    "AddPushButtonClicked\0MessageClicked"
+    "read_ServerData\0MessageClicked\0"
+    "QListWidgetItem*\0item"
 };
 #undef QT_MOC_LITERAL
 
@@ -65,14 +68,14 @@ static const uint qt_meta_data_ChatRoom[] = {
        3,    0,   40,    2, 0x08 /* Private */,
        4,    0,   41,    2, 0x08 /* Private */,
        5,    0,   42,    2, 0x08 /* Private */,
-       6,    0,   43,    2, 0x08 /* Private */,
+       6,    1,   43,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 7,    8,
 
        0        // eod
 };
@@ -86,12 +89,11 @@ void ChatRoom::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: _t->SerachPushButtonClicked(); break;
         case 1: _t->LogOutPushButtonClicked(); break;
         case 2: _t->SendPushButtonClicked(); break;
-        case 3: _t->AddPushButtonClicked(); break;
-        case 4: _t->MessageClicked(); break;
+        case 3: _t->read_ServerData(); break;
+        case 4: _t->MessageClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject ChatRoom::staticMetaObject = { {
