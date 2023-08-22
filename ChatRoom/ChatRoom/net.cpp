@@ -12,6 +12,7 @@ enum MessageType {
 	GET_FORWARDING_IDS,
 	CHANGE_TEAM_NAME,
 	DELETE_TEAM,
+	GET_TEAM_ID,
 };
 #endif // NET_CPP
 
