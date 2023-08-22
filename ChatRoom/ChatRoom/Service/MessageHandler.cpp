@@ -130,7 +130,7 @@ std::vector<int> Message_JOIN_TEAM_Handler::MessageSentList(const std::string& s
 
 
 std::string Message_GET_FORWARDING_IDS_Handler::HandleMessage(const std::string& str) {
-	return str;
+	return std::string("06|") + str;
 }
 
 std::vector<int> Message_GET_FORWARDING_IDS_Handler::MessageSentList(const std::string& str) {
