@@ -3,11 +3,7 @@
 #include <QMainWindow>
 #include "ui_Login.h"
 #include "TcpConnection.h"
-#include "serialize/DataStream.h"
-#include "serialize/Serializable.h"
 #include <iostream>
-
-using namespace yazi::serialize;
 
 class Login : public QMainWindow
 {
