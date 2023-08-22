@@ -70,8 +70,8 @@ void Login::onDataReceived(const QByteArray& data)
 					tr("登录成功，开始和他人聊天吧！"),
 					QMessageBox::Ok | QMessageBox::Cancel,
 					QMessageBox::Ok);
-				ChatRoom ch;
-				ch.show();
+				ChatRoom* ch = new ChatRoom;
+				ch->show();
 				this->close();
 				break;
 			}
