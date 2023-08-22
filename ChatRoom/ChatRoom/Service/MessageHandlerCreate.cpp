@@ -53,4 +53,5 @@ MessageHandler* MessageHandlerIndustry::CreateMessageHandler() {
 
 MessageHandlerIndustry::~MessageHandlerIndustry() {
 	// 析构函数实现
+	
 }

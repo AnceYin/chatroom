@@ -314,3 +314,4 @@ vector<int> getJoinedGroupIDs(int user_id) {
   }
   return groupIDs;
 }
+

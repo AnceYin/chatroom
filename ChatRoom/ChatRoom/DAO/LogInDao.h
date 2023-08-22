@@ -38,4 +38,5 @@ bool changeTeamName(int user_id, int team_id, string new_team_name);
 bool deleteTeam(int user_id, int team_id);
 
 // 获取指定user_id加入的所有team_id
-vector<int> getJoinedGroupIDs(int user_id)
+vector<int> getJoinedGroupIDs(int user_id);
+

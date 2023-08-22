@@ -172,4 +172,5 @@ std::string Message_GET_TEAM_ID_Handler::HandleMessage(const std::string& str) {
 std::vector<int> Message_GET_TEAM_ID_Handler::MessageSentList(const std::string& str) {
 	std::vector<int> vs;
 	return vs;
+	
 }
