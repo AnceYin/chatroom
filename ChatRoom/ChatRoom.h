@@ -5,6 +5,9 @@
 #include <QtNetwork>
 #include<QMessageBox>
 #include <QListWidgetItem>
+#include "TcpConnection.h"
+#include "Login.h"
+extern QString user_id;
 
 class ChatRoom : public QMainWindow
 {
@@ -20,13 +23,15 @@ private slots:
     void SerachPushButtonClicked();//���serach��ťִ�в�����Ϣ�Ĳ���
     void LogOutPushButtonClicked();//���Log out�ǳ�
     void SendPushButtonClicked();//���Send������Ϣ
-    void read_ServerData();//���ܷ�������������Ϣ
+    //void read_ServerData();//���ܷ�������������Ϣ
     void MessageClicked(QListWidgetItem* item);//�����Ϣ���������¼
+    // 数据接受
+    void onDataReceived(const QByteArray& data);
 
 private:
     Ui::ChatRoomClass ui;
-    QTcpSocket* tcpSocket;
-    bool isConnected=false;
+    TcpSingleton* m_tcpConn;
+    bool isConnected=true;
     QString CurrentContact;
     QString SendMessage;
     QString ReceiveMessage;

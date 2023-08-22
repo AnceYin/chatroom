@@ -8,17 +8,17 @@ ChatRoom::ChatRoom(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    tcpSocket = new QTcpSocket(this);
-    tcpSocket->connectToHost("192.168.108.1", 8080);
-    bool state = tcpSocket->waitForConnected(1000);
-    if (state) {
+    m_tcpConn = TcpSingleton::instance();
+    //bool state = m_tcpConn->waitForConnected(1000);
+    /*if (state) {
         isConnected = true;
         QMessageBox::information(NULL, "Title", "success");
         connect(tcpSocket, &QTcpSocket::readyRead, this, &ChatRoom::read_ServerData);
     }
     else {
         QMessageBox::warning(this, "Title", "fail");
-    }
+    }*/
+    connect(m_tcpConn, &TcpSingleton::dataReceived, this, &ChatRoom::onDataReceived);
     ShowMessage();
 }
 
@@ -67,7 +67,6 @@ void ChatRoom::SerachPushButtonClicked()
 void ChatRoom::LogOutPushButtonClicked()
 {
     this->close();
-
 }
 
 void ChatRoom::ShowMessage()
@@ -122,9 +121,11 @@ void ChatRoom::ShowMessage()
     connect(ui.listWidget_MessageQueue, &QListWidget::itemClicked, this, &ChatRoom::MessageClicked);
 }
 
-void ChatRoom::read_ServerData()
+void ChatRoom::onDataReceived(const QByteArray& data)
 {
-    QString receivedData = QString::fromUtf8(tcpSocket->readAll());
+    QString receivedData = QString::fromUtf8(data);
+    // 首先判断前两个字符是06（team——msg）还是初始化09（TEAM_INIT）按不同逻辑处理
+    
     //按规定切割字符串
     QString AvatarFilePath = "://avatar/" + CurrentContact + ".png";
     addChatMessage(AvatarFilePath, receivedData,-1);
@@ -141,14 +142,25 @@ void ChatRoom::read_ServerData()
 
 void ChatRoom::SendPushButtonClicked()
 {
+    // 06|user_id|team_id|str
     if (isConnected) {
         if (ui.Message->toPlainText() == "") {
             QMessageBox::information(NULL, "Title", "The text box should have data!");
             return;
         }
         SendMessage = ui.Message->toPlainText();
+
+        // 拿去teamid
+
+        QString team_id = "111111111111111111111111111111";
+        QString Msg = "06|" + user_id + "|" + team_id + "|" + SendMessage;
+
+
+        // ------------------------------------------------
+         
+       
         //按规定组合字符串
-        tcpSocket->write(ui.Message->toPlainText().toUtf8());
+        m_tcpConn->sendData(Msg.toLatin1(), Msg.size());
         QString AvatarFilePath = "://avatar/self.png";//登录客户端用户的头像
         addChatMessage(AvatarFilePath, ui.Message->toPlainText(),1);//1代表是客户端发送的数据，-1代表接受的数据
         // 假设联系人的唯一标识符是用户名
