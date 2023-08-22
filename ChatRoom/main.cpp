@@ -10,9 +10,9 @@
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-    ChatRoom w;
+    ChatRoom c;
     Login l;
-    CreatGroup c;
     l.show();
+    //c.show();
     return a.exec();
 }

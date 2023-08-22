@@ -61,7 +61,7 @@ void CreatGroup::SearchClicked() {
 		data.append("|");
 		data.append(team_id);
 		QByteArray newdata = data.toLatin1();
-		m_tcpConn->sendData(newdata,30);
+		m_tcpConn->sendData(newdata, newdata.size());
 	}
 }
 

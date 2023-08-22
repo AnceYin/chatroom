@@ -33,7 +33,7 @@ void Add::CreatPushButtonClicked()
 		data.append("|");
 		data.append(team_name);
 		QByteArray newdata = data.toLatin1();
-		m_tcpConn->sendData(newdata, 30);
+		m_tcpConn->sendData(newdata, newdata.size());
 	}
 }
 

@@ -7,6 +7,7 @@
 #include <QListWidgetItem>
 #include "TcpConnection.h"
 #include "Login.h"
+#include "CreatGroup.h"
 extern QString user_id;
 
 class ChatRoom : public QMainWindow

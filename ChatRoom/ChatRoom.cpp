@@ -10,10 +10,8 @@ ChatRoom::ChatRoom(QWidget *parent)
     ui.setupUi(this);
     m_tcpConn = TcpSingleton::instance();
     // 发送初始化报文 返回09|team_id1|team_id2.....
-    // QString msgIni = "09|" + user_id;
-    // m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
-
-    ui.Message->setText(user_id);
+     QString msgIni = "09|" + user_id;
+     m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
 
     //bool state = m_tcpConn->waitForConnected(1000);
     /*if (state) {
@@ -127,11 +125,13 @@ void ChatRoom::ShowMessage()
     connect(ui.listWidget_MessageQueue, &QListWidget::itemClicked, this, &ChatRoom::MessageClicked);
 }
 
+// 收06|user_id|team_id|content
+//   09|team_id|team_id...
 void ChatRoom::onDataReceived(const QByteArray& data)
 {
     QString receivedData = QString::fromUtf8(data);
     // 首先判断前两个字符是06（team——msg）还是初始化09（TEAM_INIT）按不同逻辑处理
-    
+
     //按规定切割字符串
     QString AvatarFilePath = "://avatar/" + CurrentContact + ".png";
     addChatMessage(AvatarFilePath, receivedData,-1);
@@ -158,7 +158,7 @@ void ChatRoom::SendPushButtonClicked()
 
         // 拿去teamid
 
-        QString team_id = "111111111111111111111111111111";
+        QString team_id = "10000001";
         QString Msg = "06|" + user_id + "|" + team_id + "|" + SendMessage;
 
 
@@ -256,8 +256,7 @@ void ChatRoom::MessageClicked(QListWidgetItem* item)
         }
     }
     else {
-        this->close();
-        Add *w=new Add();
-        w->show();//打开Add页面
+        CreatGroup* c = new CreatGroup();
+        c->show();
     }
 }

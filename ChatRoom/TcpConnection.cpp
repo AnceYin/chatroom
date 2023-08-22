@@ -10,7 +10,7 @@ TcpSingleton::TcpSingleton(QObject* parent) : QObject(parent)
     m_tcpSocket = new QTcpSocket(this);
 
     QString ip = "127.0.0.1";
-    unsigned short port = 55369;
+    unsigned short port = 55360;
     m_tcpSocket->connectToHost(QHostAddress(ip), port);
 
     connect(m_tcpSocket, &QTcpSocket::readyRead, this, &TcpSingleton::onReadyRead);
@@ -35,8 +35,14 @@ void TcpSingleton::connectToServer(const QString& serverAddress, quint16 port)
 
 void TcpSingleton::sendData(const QByteArray& data, qint64 len)
 {
-    m_tcpSocket->write(data, len);
-    m_tcpSocket->flush();
+    if (m_tcpSocket->state() == QAbstractSocket::ConnectedState) {
+        // Write data to the socket
+        m_tcpSocket->write(data, len);
+    }
+    else {
+        // Handle the error or try reconnecting
+        qDebug() << "Socket is not open or connected.";
+    }
 }
 
 void TcpSingleton::onReadyRead()
