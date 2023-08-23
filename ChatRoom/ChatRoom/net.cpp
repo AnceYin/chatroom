@@ -69,7 +69,7 @@ enum MessageType
 	// 12|user_id
 	QUERY_CREATOR_BY_TEAM_ID = 12,
 
-	// 查询指定用户ID用户名 
+	// 查询指定用户ID用户名 无法显示
 	// 13|user_id
 	// 13|username
 	QUERY_USERNAME_BY_USER_ID = 13,

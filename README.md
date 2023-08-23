@@ -66,7 +66,7 @@
 sudo apt update
 sudo apt install git g++ cmake libmysqlcppconn-dev
 git https://github.com/AnceYin/chatroom.git
-cd chatroom/backend/
+cd chatroom/ChatRoom/
 mkdir build
 cd build
 cmake ..

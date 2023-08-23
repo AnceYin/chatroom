@@ -10,6 +10,8 @@ bool logIn(int user_id, string password)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
 
         // 执行登录查询
         PreparedStatement *pstmt;
@@ -41,6 +43,10 @@ int signIn(string username, string password)
         std::unique_ptr<Connection> con(driver->connect(HOST, USERNAME, PASSWORD));
         con->setSchema(DATABASE);
 
+        // 创建Statement并设置字符集
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
+
         // 使用参数化查询来防止SQL注入攻击
         std::unique_ptr<PreparedStatement> pstmt(con->prepareStatement("INSERT INTO Users (username, password) VALUES (?, ?)"));
         pstmt->setString(1, username);
@@ -48,7 +54,6 @@ int signIn(string username, string password)
         pstmt->execute();
 
         // 获取插入的用户ID
-        std::unique_ptr<Statement> stmt(con->createStatement());
         std::unique_ptr<ResultSet> res(stmt->executeQuery("SELECT LAST_INSERT_ID()"));
         res->next();
         int user_id = res->getInt(1);
@@ -72,6 +77,8 @@ bool changeUsername(int user_id, string new_username)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("UPDATE Users SET username = ? WHERE user_id = ?");
         pstmt->setString(1, new_username);
@@ -98,6 +105,8 @@ bool changePassword(int user_id, string password, string new_password)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
 
         // 验证密码
         PreparedStatement *pstmt;
@@ -139,12 +148,14 @@ int createTeam(int user_id, string team_name)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("INSERT INTO Teams (team_name, creator_id) VALUES (?, ?)");
         pstmt->setString(1, team_name);
         pstmt->setInt(2, user_id);
         pstmt->execute();
-        Statement *stmt = con->createStatement();
+        stmt = con->createStatement();
         ResultSet *res = stmt->executeQuery("SELECT LAST_INSERT_ID()");
         res->next();
         int team_id = res->getInt(1);
@@ -181,6 +192,8 @@ bool joinTeam(int user_id, int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("INSERT INTO TeamMember (group_id, member_id) VALUES (?, ?)");
         pstmt->setInt(1, team_id);
@@ -209,6 +222,8 @@ vector<int> sendMessage(int user_id, int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT member_id FROM TeamMember WHERE group_id = ? AND member_id != ?");
         pstmt->setInt(1, team_id);
@@ -240,6 +255,8 @@ bool changeTeamName(int user_id, int team_id, string new_team_name)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
         pstmt->setInt(1, team_id);
@@ -274,6 +291,8 @@ bool deleteTeam(int user_id, int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT * FROM Teams WHERE team_id = ? AND creator_id = ?");
         pstmt->setInt(1, team_id);
@@ -312,6 +331,8 @@ vector<int> queryTeamsByUserID(int user_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT group_id FROM TeamMember WHERE member_id = ?");
         pstmt->setInt(1, user_id);
@@ -344,6 +365,8 @@ vector<int> queryUsersByTeamID(int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT member_id FROM TeamMember WHERE group_id = ?");
         pstmt->setInt(1, team_id);
@@ -376,6 +399,8 @@ vector<int> queryTeamsByCreatorID(int user_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT team_id FROM Teams WHERE creator_id = ?");
         pstmt->setInt(1, user_id);
@@ -408,6 +433,8 @@ int queryCreatorByTeamID(int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT creator_id FROM Teams WHERE team_id = ?");
         pstmt->setInt(1, team_id);
@@ -440,6 +467,8 @@ string queryUsernameByUserID(int user_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT username FROM Users WHERE user_id = ?");
         pstmt->setInt(1, user_id);
@@ -471,6 +500,8 @@ vector<int> queryUserIDsByUsername(string username)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT user_id FROM Users WHERE username = ?");
         pstmt->setString(1, username);
@@ -503,6 +534,8 @@ string queryTeamNameByTeamID(int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT team_name FROM Teams WHERE team_id = ?");
         pstmt->setInt(1, team_id);
@@ -534,6 +567,8 @@ vector<int> queryTeamIDsByTeamName(string team_name)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT team_id FROM Teams WHERE team_name = ?");
         pstmt->setString(1, team_name);
@@ -564,6 +599,8 @@ bool deleteUser(int user_id, string password)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("DELETE FROM Users WHERE user_id = ? AND password = ?");
         pstmt->setInt(1, user_id);
@@ -590,6 +627,8 @@ bool leaveTeam(int user_id, int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("DELETE FROM TeamMember WHERE member_id = ? AND group_id = ?");
         pstmt->setInt(1, user_id);
@@ -617,6 +656,8 @@ bool transferCreator(int user_id, int to_user_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("UPDATE Teams SET creator_id = ? WHERE creator_id = ?");
         pstmt->setInt(1, to_user_id);
@@ -643,6 +684,8 @@ bool queryUserInTeam(int user_id, int team_id)
         driver = mysql::get_mysql_driver_instance();
         con = driver->connect(HOST, USERNAME, PASSWORD);
         con->setSchema(DATABASE);
+        Statement *stmt = con->createStatement();
+        stmt->execute("SET NAMES 'utf8'");
         PreparedStatement *pstmt;
         pstmt = con->prepareStatement("SELECT COUNT(*) FROM TeamMember WHERE group_id = ? AND member_id = ?");
         pstmt->setInt(1, team_id);
