@@ -5,10 +5,23 @@
 #include <QtNetwork>
 #include<QMessageBox>
 #include <QListWidgetItem>
+#include <qvector>
 #include "TcpConnection.h"
 #include "Login.h"
 #include "CreatGroup.h"
 extern QString user_id;
+
+struct ChatMessage {
+    QString sender_id;
+    QString message;
+    QDateTime timestamp;
+};
+
+struct Group {
+    QString name;
+    QString id;
+    QVector<ChatMessage> chatMessages;
+};
 
 class ChatRoom : public QMainWindow
 {
@@ -19,6 +32,7 @@ public:
     ~ChatRoom();
     void ShowMessage();//��ʾ��Ϣ
     void addChatMessage(const QString& avatarPath, const QString& message,int k);
+    Group* findGroupByTeamId(const QString& teamId, QVector<Group>& groups);
 
 private slots:
     void SerachPushButtonClicked();//���serach��ťִ�в�����Ϣ�Ĳ���
@@ -36,7 +50,12 @@ private:
     QString CurrentContact;
     QString SendMessage;
     QString ReceiveMessage;
+    // team_id, user_id, content
+    QVector<Group> groups;
+    QString team_id_current = "";
 };
+
+
 
 
 

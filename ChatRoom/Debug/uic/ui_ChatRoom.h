@@ -39,6 +39,7 @@ public:
     QScrollArea *scrollArea_3;
     QWidget *scrollAreaWidgetContents;
     QListWidget *listWidget_MessageQueue;
+    QPushButton *DeletePushButton;
 
     void setupUi(QMainWindow *ChatRoomClass)
     {
@@ -106,6 +107,9 @@ public:
         listWidget_MessageQueue->setObjectName(QString::fromUtf8("listWidget_MessageQueue"));
         listWidget_MessageQueue->setGeometry(QRect(0, 0, 121, 341));
         scrollArea_3->setWidget(scrollAreaWidgetContents);
+        DeletePushButton = new QPushButton(centralWidget);
+        DeletePushButton->setObjectName(QString::fromUtf8("DeletePushButton"));
+        DeletePushButton->setGeometry(QRect(620, 10, 121, 31));
         ChatRoomClass->setCentralWidget(centralWidget);
 
         retranslateUi(ChatRoomClass);
@@ -124,6 +128,7 @@ public:
         Serach_LineEdit->setText(QString());
         label->setText(QCoreApplication::translate("ChatRoomClass", "Name", nullptr));
         Log_out->setText(QCoreApplication::translate("ChatRoomClass", "Log out", nullptr));
+        DeletePushButton->setText(QCoreApplication::translate("ChatRoomClass", "Delete The Group", nullptr));
     } // retranslateUi
 
 };

@@ -1,12 +1,27 @@
-﻿#include "Login.h"
+#include "Login.h"
 #include "ChatRoom.h"
 #include <QMessageBox>
 #include <QTcpSocket>
 #include "net.cpp"
 #include <QString>
 #include <QTextCodec>
-#pragma execution_character_set("UTF-8")
+#include "Register.h"
+//#pragma execution_character_set("UTF-8")
 QString user_id;
+
+std::string qstrToStdStr2(const QString& qstr)
+{
+	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+	QByteArray encodedData = codec->fromUnicode(qstr);
+	return encodedData.constData();
+}
+
+QString stdStrToQstr(const std::string& stdStr)
+{
+	QTextCodec* codec = QTextCodec::codecForName("UTF-8");
+	QString qstr = codec->toUnicode(stdStr.c_str());
+	return qstr;
+}
 
 Login::Login(QWidget* parent)
 	: QMainWindow(parent)
@@ -15,8 +30,8 @@ Login::Login(QWidget* parent)
 
 	m_tcpConn = TcpSingleton::instance();
 	connect(m_tcpConn, &TcpSingleton::dataReceived, this, &Login::onDataReceived);
-
 	connect(ui.loginButton, &QPushButton::clicked, this, &Login::LoginPushButtonClicked);
+	connect(ui.registerButton, &QPushButton::clicked, this, &Login::RegisterClicked);
 }
 
 Login::~Login()
@@ -34,25 +49,25 @@ void Login::LoginPushButtonClicked()
 	
 }
 
-void Login::SignUpClicked()
+void Login::ForgetPasswordClicked()
 {
 
 }
 
-void Login::ForgetPasswordClicked()
-{
-
+void Login::RegisterClicked() {
+	Register* re = new Register;
+	re->show();
+	this->close();
 }
 
 // 处理收到消息函数
 void Login::onDataReceived(const QByteArray& data)
 {
 	QString receData = QString(data);
-	if (receData[0] != "0" || receData[1] != "0") return;
+	if (receData[0] != '0' || receData[1] != '0') return;
 	for (int i = 0; i < receData.length(); i++) {
 		if (receData[i] == "|") {
 			if (receData[i + 1] == "1") {
-				user_id = ui.usernameLineEdit->text();
 				QMessageBox::question(this,
 					tr("登录"),
 					tr("登录成功，开始和他人聊天吧！"),

@@ -13,7 +13,7 @@ ChatRoom::ChatRoom(QWidget *parent)
      QString msgIni = "09|" + user_id;
      m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
 
-    //bool state = m_tcpConn->waitForConnected(1000);
+    // bool state = m_tcpConn->waitForConnected(1000);
     /*if (state) {
         isConnected = true;
         QMessageBox::information(NULL, "Title", "success");
@@ -34,7 +34,7 @@ void ChatRoom::SerachPushButtonClicked()
     QFile file("://Contacts.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QTextStream stream(&file);
-        //读取聊天记录
+        // 读取聊天记录
         while (!stream.atEnd()) {
             QString line = stream.readLine();
             if (ui.Serach_LineEdit->text() == line) {
@@ -70,6 +70,8 @@ void ChatRoom::SerachPushButtonClicked()
 
 void ChatRoom::LogOutPushButtonClicked()
 {
+    QString str = "10";
+    m_tcpConn->sendData(str.toLatin1(), str.size());
     this->close();
 }
 
@@ -131,18 +133,98 @@ void ChatRoom::onDataReceived(const QByteArray& data)
 {
     QString receivedData = QString::fromUtf8(data);
     // 首先判断前两个字符是06（team——msg）还是初始化09（TEAM_INIT）按不同逻辑处理
+    if (receivedData[0] == '0' && receivedData[1] == '9') {
+        ui.listWidget_MessageQueue->clear();
+        // 创建一张图片
+        QPixmap image("://img/add.png");
 
-    //按规定切割字符串
-    QString AvatarFilePath = "://avatar/" + CurrentContact + ".png";
-    addChatMessage(AvatarFilePath, receivedData,-1);
-    QString filePath = "://chatlogs/" + CurrentContact + ".txt"; // 根据唯一标识符构建文件路径
-    QFile file(filePath);
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream stream(&file);
-        // 在这里写入聊天记录
-        QString logEntry = QString("%1: %2: %3").arg(AvatarFilePath, SendMessage, "-1");
-        stream << logEntry << endl;
-        file.close();
+        // 创建一个 ImageItem 对象，并设置图片
+        ImageItem* item = new ImageItem(image);
+
+        // 使用 QListWidgetItem 的 setSizeHint() 方法设置项的大小为图片的大小
+        item->setSizeHint(QSize(20, 20));
+
+        // 设置 QListWidgetItem 的对齐方式为居中对齐
+        item->setTextAlignment(Qt::AlignCenter);
+
+        // 使用 QListWidgetItem 的 setIcon() 方法设置图片
+        item->setIcon(QIcon(image));
+
+        // 将图片项添加到消息队列
+        ui.listWidget_MessageQueue->addItem(item);
+        receivedData.remove(0, 3);
+        QStringList team_idList = receivedData.split("|");
+        for (int i = 0; i < team_idList.size(); i++) {
+            Group g;
+            g.id = team_idList[i];
+            groups.push_back(g);
+
+            // 创建标签
+            QListWidgetItem* item = new QListWidgetItem(g.id);
+
+            // 将标签添加到 QListWidget
+            ui.listWidget_MessageQueue->addItem(item);
+        }
+
+    }
+    else if (receivedData[0] == '0' && receivedData[1] == '6') {
+        // 06|user_id|team_id|msg
+        // 解析消息
+        QStringList messageParts = receivedData.split("|");
+        if (messageParts.size() >= 4) {
+            QString messageType = messageParts[0];
+            QString userId = messageParts[1];
+            QString teamId = messageParts[2];
+            QString messageContent = messageParts[3];
+
+            if (user_id == userId) return;
+            // 在 groups 中查找匹配的组
+            bool groupFound = false;
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups[i].id == teamId) {
+                    // 找到匹配的组，将消息插入到该组的 chatMessages 中
+                    ChatMessage chatMessage;
+                    chatMessage.sender_id = userId;
+                    chatMessage.message = messageContent;
+                    chatMessage.timestamp = QDateTime::currentDateTime();
+                    groups[i].chatMessages.push_back(chatMessage);
+                    
+                    if (teamId == team_id_current) {
+                        addChatMessage("", "user:" + userId, 1);
+                        addChatMessage("", messageContent, 1);
+                    }
+                    
+                    groupFound = true;
+                    break;
+                }
+            }
+
+            if (!groupFound) {
+                // 未找到匹配的组，创建新的组并插入到 groups 中
+                Group newGroup;
+                newGroup.name = teamId;  // 假设组名称与 teamId 相同
+                newGroup.id = teamId;
+                ChatMessage chatMessage;
+                chatMessage.sender_id = userId;
+                chatMessage.message = messageContent;
+                chatMessage.timestamp = QDateTime::currentDateTime();
+                newGroup.chatMessages.push_back(chatMessage);
+                groups.push_back(newGroup);
+            }
+        }
+        ////按规定切割字符串
+        //QString AvatarFilePath = "://avatar/" + CurrentContact + ".png";
+        //addChatMessage(AvatarFilePath, receivedData, -1);
+        //QString filePath = "://chatlogs/" + CurrentContact + ".txt"; // 根据唯一标识符构建文件路径
+        //QFile file(filePath);
+        //if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        //    QTextStream stream(&file);
+        //    // 在这里写入聊天记录
+        //    QString logEntry = QString("%1: %2: %3").arg(AvatarFilePath, SendMessage, "-1");
+        //    stream << logEntry << endl;
+        //    file.close();
+        //}
+
     }
 }
 
@@ -157,28 +239,31 @@ void ChatRoom::SendPushButtonClicked()
         SendMessage = ui.Message->toPlainText();
 
         // 拿去teamid
-
-        QString team_id = "10000001";
-        QString Msg = "06|" + user_id + "|" + team_id + "|" + SendMessage;
-
-
-        // ------------------------------------------------
-         
+        QString Msg = "06|" + user_id + "|" + team_id_current + "|" + SendMessage;
        
         //按规定组合字符串
         m_tcpConn->sendData(Msg.toLatin1(), Msg.size());
-        QString AvatarFilePath = "://avatar/self.png";//登录客户端用户的头像
-        addChatMessage(AvatarFilePath, ui.Message->toPlainText(),1);//1代表是客户端发送的数据，-1代表接受的数据
-        // 假设联系人的唯一标识符是用户名
-        QString filePath = "://chatlogs/" + CurrentContact + ".txt"; // 根据唯一标识符构建文件路径
-        QFile file(filePath);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-            QTextStream stream(&file);
-            // 在这里写入聊天记录
-            QString logEntry = QString("%1: %2: %3").arg(AvatarFilePath, SendMessage,"1");
-            stream << logEntry << endl;
-            file.close();
-        }
+
+        ChatMessage chatMessage;
+        chatMessage.sender_id = user_id;
+        chatMessage.message = SendMessage;
+        chatMessage.timestamp = QDateTime::currentDateTime();
+        findGroupByTeamId(team_id_current, groups)->chatMessages.push_back(chatMessage);
+
+        addChatMessage("", "user:" + user_id, -1);
+        addChatMessage("", ui.Message->toPlainText(), -1);
+        //QString AvatarFilePath = "://avatar/self.png";//登录客户端用户的头像
+        //addChatMessage(AvatarFilePath, ui.Message->toPlainText(),1);//1代表是客户端发送的数据，-1代表接受的数据
+        //// 假设联系人的唯一标识符是用户名
+        //QString filePath = "://chatlogs/" + CurrentContact + ".txt"; // 根据唯一标识符构建文件路径
+        //QFile file(filePath);
+        //if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        //    QTextStream stream(&file);
+        //    // 在这里写入聊天记录
+        //    QString logEntry = QString("%1: %2: %3").arg(AvatarFilePath, SendMessage,"1");
+        //    stream << logEntry << endl;
+        //    file.close();
+        //}
     }
     else {
         QMessageBox::warning(this, "error", "Not connected to the server!");
@@ -205,13 +290,13 @@ void ChatRoom::addChatMessage(const QString& avatarPath, const QString& message,
     // 将头像 QLabel 和消息 QLabel 放置在水平布局中
     QHBoxLayout* layout = new QHBoxLayout(widget);
     if (k == 1) {
-        layout->addWidget(avatarLabel);
+        //layout->addWidget(avatarLabel);
         layout->addWidget(messageLabel);
         layout->setAlignment(Qt::AlignLeft);
     }
     else {
         layout->addWidget(messageLabel);
-        layout->addWidget(avatarLabel);
+        //layout->addWidget(avatarLabel);
         layout->setAlignment(Qt::AlignRight);
     }
     layout->setSpacing(5); // 为小部件添加一些间距
@@ -225,38 +310,63 @@ void ChatRoom::addChatMessage(const QString& avatarPath, const QString& message,
 
 void ChatRoom::MessageClicked(QListWidgetItem* item)
 {
-    if (dynamic_cast<MessageItem*>(item) != nullptr)
+    // dynamic_cast<MessageItem*>(item) != nullptr
+    if (!item->text().isEmpty())
     {
-        MessageItem* messageItem = dynamic_cast<MessageItem*>(item);
-        QString message = messageItem->message();
-        QPixmap avatar = messageItem->avatar();
-
-        // 根据消息和头像信息获取对应的聊天记录，并显示在界面中
+        team_id_current = item->text();
         ui.listWidget->clear();
-        CurrentContact = message;
-        QString filePath = "://chatlogs/" + CurrentContact + ".txt";
-        QFile file(filePath);
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-            QTextStream stream(&file);
-            //读取聊天记录
-            int k;
-            QString message,Path;
-            while (!stream.atEnd()) {
-                QString line = stream.readLine();
-                QStringList parts = line.split(':');
-                Path = parts[0];
-                message = parts[1];
-                k = parts[2].toInt();
-                addChatMessage(Path, message, k);
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups[i].id == team_id_current) {
+                for (auto& c : groups[i].chatMessages) {
+                    int k = 1;
+                    if (c.sender_id == user_id) k = -1;
+                    addChatMessage("", "user:" + c.sender_id, k);
+                    addChatMessage("", c.message, k);
+                }
+                break;
             }
-            file.close();
         }
-        else {
-            qDebug() << "无法打开文件：";
-        }
+        
+        //MessageItem* messageItem = dynamic_cast<MessageItem*>(item);
+        //QString message = messageItem->message();
+        //QPixmap avatar = messageItem->avatar();
+
+        //// 根据消息和头像信息获取对应的聊天记录，并显示在界面中
+        //ui.listWidget->clear();
+        //CurrentContact = message;
+        //QString filePath = "://chatlogs/" + CurrentContact + ".txt";
+        //QFile file(filePath);
+        //if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        //    QTextStream stream(&file);
+        //    //读取聊天记录
+        //    int k;
+        //    QString message,Path;
+        //    while (!stream.atEnd()) {
+        //        QString line = stream.readLine();
+        //        QStringList parts = line.split(':');
+        //        Path = parts[0];
+        //        message = parts[1];
+        //        k = parts[2].toInt();
+        //        addChatMessage(Path, message, k);
+        //    }
+        //    file.close();
+        //}
+        //else {
+        //    qDebug() << "无法打开文件：";
+        //}
     }
     else {
         CreatGroup* c = new CreatGroup();
         c->show();
     }
+}
+
+Group* ChatRoom::findGroupByTeamId(const QString& teamId, QVector<Group>& groups)
+{
+    for (int i = 0; i < groups.size(); i++) {
+        if (groups[i].id == teamId) {
+            return &groups[i];
+        }
+    }
+    return nullptr;  // 如果未找到匹配的组，则返回 nullptr
 }

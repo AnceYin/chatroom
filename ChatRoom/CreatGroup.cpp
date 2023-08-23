@@ -76,6 +76,11 @@ void CreatGroup::onDataReceived(const QByteArray& data) {
 					tr("恭喜你，加入成功！"),
 					QMessageBox::Ok | QMessageBox::Cancel,
 					QMessageBox::Ok);
+				for (int i = 0; i < 1e5; i++) {
+					int j;
+				}
+				QString msgIni = "09|" + user_id;
+				m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
 				break;
 			}
 			else if (receData[i + 1] == "0") {

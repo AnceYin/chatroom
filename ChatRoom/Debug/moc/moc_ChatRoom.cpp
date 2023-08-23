@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ChatRoom_t {
-    QByteArrayData data[9];
-    char stringdata0[133];
+    QByteArrayData data[10];
+    char stringdata0[137];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,16 +37,17 @@ QT_MOC_LITERAL(1, 9, 23), // "SerachPushButtonClicked"
 QT_MOC_LITERAL(2, 33, 0), // ""
 QT_MOC_LITERAL(3, 34, 23), // "LogOutPushButtonClicked"
 QT_MOC_LITERAL(4, 58, 21), // "SendPushButtonClicked"
-QT_MOC_LITERAL(5, 80, 15), // "read_ServerData"
-QT_MOC_LITERAL(6, 96, 14), // "MessageClicked"
-QT_MOC_LITERAL(7, 111, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(8, 128, 4) // "item"
+QT_MOC_LITERAL(5, 80, 14), // "MessageClicked"
+QT_MOC_LITERAL(6, 95, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(7, 112, 4), // "item"
+QT_MOC_LITERAL(8, 117, 14), // "onDataReceived"
+QT_MOC_LITERAL(9, 132, 4) // "data"
 
     },
     "ChatRoom\0SerachPushButtonClicked\0\0"
     "LogOutPushButtonClicked\0SendPushButtonClicked\0"
-    "read_ServerData\0MessageClicked\0"
-    "QListWidgetItem*\0item"
+    "MessageClicked\0QListWidgetItem*\0item\0"
+    "onDataReceived\0data"
 };
 #undef QT_MOC_LITERAL
 
@@ -67,15 +68,15 @@ static const uint qt_meta_data_ChatRoom[] = {
        1,    0,   39,    2, 0x08 /* Private */,
        3,    0,   40,    2, 0x08 /* Private */,
        4,    0,   41,    2, 0x08 /* Private */,
-       5,    0,   42,    2, 0x08 /* Private */,
-       6,    1,   43,    2, 0x08 /* Private */,
+       5,    1,   42,    2, 0x08 /* Private */,
+       8,    1,   45,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7,    8,
+    QMetaType::Void, 0x80000000 | 6,    7,
+    QMetaType::Void, QMetaType::QByteArray,    9,
 
        0        // eod
 };
@@ -89,8 +90,8 @@ void ChatRoom::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 0: _t->SerachPushButtonClicked(); break;
         case 1: _t->LogOutPushButtonClicked(); break;
         case 2: _t->SendPushButtonClicked(); break;
-        case 3: _t->read_ServerData(); break;
-        case 4: _t->MessageClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 3: _t->MessageClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 4: _t->onDataReceived((*reinterpret_cast< const QByteArray(*)>(_a[1]))); break;
         default: ;
         }
     }

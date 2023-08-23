@@ -57,4 +57,6 @@ void Add::onDataReceived(const QByteArray& data) {
 		tr(ptr),
 		QMessageBox::Ok | QMessageBox::Cancel,
 		QMessageBox::Ok);
+	QString msgIni = "09|" + user_id;
+	m_tcpConn->sendData(msgIni.toLatin1(), msgIni.size());
 }
