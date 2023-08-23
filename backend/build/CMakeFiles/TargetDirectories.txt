@@ -1,5 +1,0 @@
-/home/ance/github/本地备份chatroom/ChatRoom/build/CMakeFiles/edit_cache.dir
-/home/ance/github/本地备份chatroom/ChatRoom/build/CMakeFiles/rebuild_cache.dir
-/home/ance/github/本地备份chatroom/ChatRoom/build/ChatRoom/CMakeFiles/ChatRoom.dir
-/home/ance/github/本地备份chatroom/ChatRoom/build/ChatRoom/CMakeFiles/edit_cache.dir
-/home/ance/github/本地备份chatroom/ChatRoom/build/ChatRoom/CMakeFiles/rebuild_cache.dir

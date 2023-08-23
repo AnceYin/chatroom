@@ -43,8 +43,36 @@
 |MySQL||https://www.mysql.com/cn/|
 
 ### 安装教程
+#### 前端：
+- 安装vs2022, 选如图所示组件：
+![](./documents/README图库/1692762741347.png)
 
-暂无
+- 下载qt在线安装版, 选如图所示组件：
+![](./documents/README图库/1692237315142.png)
+
+- 打开vs下载qt插件
+![](./documents/README图库/1692763135787.png)
+
+- 将qt连接到vs
+![](./documents/README图库/1692763262912.png)
+
+- 在windows环境下双击frontend/ChatRoom.sln
+
+
+#### 后端:
+- 这里以ubuntu22.04举例
+运行以下代码
+```bash
+sudo apt update
+sudo apt install git g++ cmake libmysqlcppconn-dev
+git https://github.com/AnceYin/chatroom.git
+cd chatroom/backend/
+mkdir build
+cd build
+cmake ..
+make
+./ChatRoom/ChatRoom
+```
 
 ## 开发进度
 
